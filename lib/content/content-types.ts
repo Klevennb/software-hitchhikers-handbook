@@ -29,7 +29,12 @@ export type SectionType =
 export type ConceptSection = {
   type: SectionType;
   title: string;
-  body: string | string[];
+  body: string | string[] | ExplainedListItem[];
+};
+
+export type ExplainedListItem = {
+  statement: string;
+  why: string;
 };
 
 export type CodeExample = {

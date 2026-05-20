@@ -1,5 +1,6 @@
 import type { ConceptSection } from "@/lib/content/content-types";
 import { GlassPanel } from "@/components/ui/GlassPanel";
+import { ExplainedList } from "./ExplainedList";
 
 export function ConceptSectionRenderer({ sections }: { sections: ConceptSection[] }) {
   return (
@@ -12,12 +13,14 @@ export function ConceptSectionRenderer({ sections }: { sections: ConceptSection[
               {String(index + 1).padStart(2, "0")} // {section.type}
             </span>
           </div>
-          {Array.isArray(section.body) ? (
+          {Array.isArray(section.body) && section.body.every(isExplainedListItem) ? (
+            <ExplainedList items={section.body} />
+          ) : Array.isArray(section.body) ? (
             <ul className="space-y-3 text-on-surface-variant">
               {section.body.map((item) => (
-                <li key={item} className="flex gap-3">
+                <li key={String(item)} className="flex gap-3">
                   <span className="mt-2 h-1.5 w-1.5 shrink-0 bg-primary-container" />
-                  <span>{item}</span>
+                  <span>{String(item)}</span>
                 </li>
               ))}
             </ul>
@@ -27,5 +30,16 @@ export function ConceptSectionRenderer({ sections }: { sections: ConceptSection[
         </GlassPanel>
       ))}
     </div>
+  );
+}
+
+function isExplainedListItem(item: unknown): item is { statement: string; why: string } {
+  return (
+    typeof item === "object" &&
+    item !== null &&
+    "statement" in item &&
+    "why" in item &&
+    typeof (item as { statement?: unknown }).statement === "string" &&
+    typeof (item as { why?: unknown }).why === "string"
   );
 }
