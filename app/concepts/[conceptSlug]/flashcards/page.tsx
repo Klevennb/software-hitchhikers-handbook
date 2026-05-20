@@ -7,8 +7,9 @@ export function generateStaticParams() {
   return getAllConcepts().map((concept) => ({ conceptSlug: concept.slug }));
 }
 
-export default function ConceptFlashcardsPage({ params }: { params: { conceptSlug: string } }) {
-  const concept = getConceptBySlug(params.conceptSlug);
+export default async function ConceptFlashcardsPage({ params }: { params: Promise<{ conceptSlug: string }> }) {
+  const { conceptSlug } = await params;
+  const concept = getConceptBySlug(conceptSlug);
   if (!concept) notFound();
 
   return (

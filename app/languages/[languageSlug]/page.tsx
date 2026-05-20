@@ -8,8 +8,9 @@ export function generateStaticParams() {
   return getAllLanguages().map((language) => ({ languageSlug: language.slug }));
 }
 
-export default function LanguagePage({ params }: { params: { languageSlug: string } }) {
-  const language = getLanguageBySlug(params.languageSlug);
+export default async function LanguagePage({ params }: { params: Promise<{ languageSlug: string }> }) {
+  const { languageSlug } = await params;
+  const language = getLanguageBySlug(languageSlug);
   if (!language) notFound();
 
   const concepts = getConceptsByLanguage(language.slug);
