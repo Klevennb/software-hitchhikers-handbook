@@ -1,4 +1,5 @@
 import type { Concept, Language, Topic } from "./content-types";
+import { penetrationTestingFlashcards } from "./penetration-testing-flashcards";
 
 export const languages: Language[] = [
   {
@@ -459,12 +460,41 @@ export const concepts: Concept[] = [
     sortOrder: 1,
     sections: [
       {
+        type: "SUMMARY",
+        title: "What It Is",
+        body:
+          "Unit testing checks a small unit of behavior in isolation. The goal is to make business rules, edge cases, and failure handling cheap to verify while keeping the feedback loop fast enough to run during normal development."
+      },
+      {
+        type: "PRACTICAL_EXAMPLES",
+        title: "What To Test: 101",
+        body: [
+          "Start with behavior that has a decision: branches, validation rules, calculations, permissions, state transitions, and error paths.",
+          "Test inputs and outputs at the public boundary of a function, component, service, or module instead of private implementation details.",
+          "Cover the boring happy path, then add meaningful edge cases such as empty input, invalid input, boundary values, missing optional data, and expected failures.",
+          "Use deterministic data and explicit assertions so a failing test tells the next engineer what behavior changed.",
+          "Prefer one clear behavior per test. A test can have multiple assertions when they describe the same outcome.",
+          "Name tests after the behavior being protected, not the internal method call sequence."
+        ]
+      },
+      {
         type: "WHEN_TO_USE",
         title: "What To Test",
         body: [
           "Business rules with meaningful branches.",
           "Pure functions and small services with clear inputs and outputs.",
           "Regression-prone edge cases."
+        ]
+      },
+      {
+        type: "CUSTOM",
+        title: "Common Unit Test Shapes",
+        body: [
+          "Pure function checks: pass input, assert output, avoid mocks.",
+          "Boundary checks: verify behavior at minimum, maximum, empty, duplicate, and malformed values.",
+          "State transition checks: start from a known state, apply one event, assert the resulting state.",
+          "Collaborator checks: mock a dependency only when the unit's behavior depends on calling it correctly.",
+          "Error checks: assert that invalid input fails with the expected error shape or fallback behavior."
         ]
       },
       {
@@ -475,16 +505,52 @@ export const concepts: Concept[] = [
           "Implementation details that users cannot observe.",
           "Trivial getters and wrappers with no behavior."
         ]
+      },
+      {
+        type: "CUSTOM",
+        title: "Proper Response To A Failing Unit Test",
+        body: [
+          "Read the failure message and identify the behavior the test claims to protect.",
+          "Reproduce the failure locally with the smallest relevant command.",
+          "Decide whether the product behavior changed intentionally or the implementation regressed.",
+          "If behavior changed intentionally, update the test name, inputs, and assertions to document the new rule.",
+          "If behavior regressed, fix the root cause and keep the test focused on observable behavior.",
+          "Avoid deleting a failing test until you can explain why the protected behavior no longer matters."
+        ]
+      },
+      {
+        type: "CUSTOM",
+        title: "Frequently Used Terms",
+        body: [
+          "Unit: the smallest useful behavior boundary under test, such as a function, module, service, or component.",
+          "Fixture: reusable test data or setup used to put the unit into a known state.",
+          "Mock: a controlled replacement for a dependency that lets the test observe or force interactions.",
+          "Stub: a simple replacement that returns predefined data.",
+          "Assertion: the explicit statement of what should be true after the behavior runs.",
+          "Arrange, Act, Assert: a common structure for setup, execution, and verification.",
+          "Regression test: a test added to prevent a previously fixed bug from returning.",
+          "Flaky test: a test that sometimes passes and sometimes fails without a meaningful code change."
+        ]
       }
     ],
     codeExamples: [
       {
-        title: "Vitest Example",
+        title: "Calculation Boundary",
         language: "ts",
-        code: "import { expect, it } from \"vitest\";\n\nit(\"applies a discount\", () => {\n  expect(applyDiscount(100, 0.2)).toBe(80);\n});"
+        code: "import { expect, it } from \"vitest\";\n\nit(\"applies a percentage discount\", () => {\n  expect(applyDiscount(100, 0.2)).toBe(80);\n});\n\nit(\"does not allow a discount greater than 100 percent\", () => {\n  expect(() => applyDiscount(100, 1.25)).toThrow(\"Invalid discount\");\n});"
+      },
+      {
+        title: "Permission Rule",
+        language: "ts",
+        code: "import { expect, it } from \"vitest\";\n\nit(\"allows project owners to archive a project\", () => {\n  const user = { id: \"user_1\", role: \"owner\" };\n  const project = { ownerId: \"user_1\", archived: false };\n\n  expect(canArchiveProject(user, project)).toBe(true);\n});\n\nit(\"blocks non-owners from archiving a project\", () => {\n  const user = { id: \"user_2\", role: \"member\" };\n  const project = { ownerId: \"user_1\", archived: false };\n\n  expect(canArchiveProject(user, project)).toBe(false);\n});"
+      },
+      {
+        title: "Error Path",
+        language: "ts",
+        code: "import { expect, it } from \"vitest\";\n\nit(\"returns a typed validation error for missing email\", () => {\n  const result = validateSignup({ email: \"\", password: \"correct-horse\" });\n\n  expect(result).toEqual({\n    ok: false,\n    field: \"email\",\n    message: \"Email is required\"\n  });\n});"
       }
     ],
-    relatedConceptSlugs: [],
+    relatedConceptSlugs: ["penetration-testing"],
     flashcards: [
       {
         front: "What makes a unit test valuable?",
@@ -492,6 +558,141 @@ export const concepts: Concept[] = [
         difficulty: "BEGINNER"
       }
     ],
+    quizQuestions: []
+  },
+  {
+    slug: "penetration-testing",
+    title: "Penetration Testing",
+    subtitle: "Authorized security testing against scoped systems and workflows",
+    summary:
+      "Penetration testing is an authorized security assessment where testers look for exploitable weaknesses, validate impact safely, and help teams remediate verified risk.",
+    difficulty: "INTERMEDIATE",
+    type: "PRINCIPLE",
+    topicSlug: "testing",
+    category: "Security Testing",
+    sortOrder: 2,
+    sections: [
+      {
+        type: "SUMMARY",
+        title: "What It Is",
+        body:
+          "Penetration testing is a time-boxed, authorized assessment of a defined attack surface. The goal is not to break systems for its own sake; it is to find credible paths to harm before real attackers do, document the business impact, and give engineering teams enough evidence to fix the root cause."
+      },
+      {
+        type: "PRACTICAL_EXAMPLES",
+        title: "Normal Engagement Workflow",
+        body: [
+          "Authorization: confirm written permission, business owner approval, emergency contacts, and testing windows before any active testing begins.",
+          "Scope: list allowed domains, APIs, environments, accounts, data sets, third-party systems, and prohibited actions.",
+          "Reconnaissance: map only in-scope assets, application paths, authentication flows, technologies, exposed services, and trust boundaries.",
+          "Testing: safely validate likely weaknesses using test accounts, seeded data, and non-destructive checks.",
+          "Validation: confirm whether the issue is reproducible, whether it crosses a security boundary, and what impact it has.",
+          "Reporting: describe affected assets, steps at a high level, evidence, severity, impact, and recommended remediation.",
+          "Remediation retest: verify the fix with the same scoped conditions and add regression coverage where possible."
+        ]
+      },
+      {
+        type: "CUSTOM",
+        title: "Common Tools",
+        body: [
+          "Burp Suite: intercepting and reviewing authorized web traffic, session behavior, and application request patterns.",
+          "OWASP ZAP: web application scanning and proxy-assisted review in approved environments.",
+          "Nmap: mapping approved hosts and services so teams understand exposed network surface.",
+          "Metasploit: validating known issues in lab or explicitly authorized contexts, not as a default first step.",
+          "Wireshark: inspecting network traffic for protocol, encryption, or leakage issues in controlled test networks.",
+          "ffuf or gobuster: discovering in-scope paths or content that should not be exposed.",
+          "sqlmap: validating suspected SQL injection only in controlled systems with explicit permission.",
+          "Semgrep, Snyk, and dependency scanners: finding code and package risks that can guide manual validation."
+        ]
+      },
+      {
+        type: "CUSTOM",
+        title: "Vectors Testers Target",
+        body: [
+          "Authentication and session handling flaws, such as weak reset flows or unsafe session lifetime behavior.",
+          "Access control problems, including IDOR and missing server-side authorization checks.",
+          "Injection risks where user-controlled input reaches an interpreter or query boundary unsafely.",
+          "Cross-site scripting where untrusted content is reflected or stored without safe output handling.",
+          "Server-side request forgery where server-side fetch features can reach unintended internal resources.",
+          "Misconfiguration, exposed secrets, dependency risk, missing rate limits, and overly permissive staging systems."
+        ]
+      },
+      {
+        type: "CUSTOM",
+        title: "Frequently Discovered Vulnerabilities",
+        body: [
+          "Broken access control: users can read, modify, or trigger actions on resources they do not own.",
+          "IDOR: object identifiers are accepted without verifying the current user's authorization for that object.",
+          "Injection: user-controlled input reaches a query, command, template, or interpreter boundary without safe handling.",
+          "Cross-site scripting: untrusted content is rendered by a browser as active content instead of inert text.",
+          "Weak authentication flows: password reset, enrollment, MFA, or session renewal behavior can be abused or bypassed.",
+          "Session management flaws: tokens live too long, are not invalidated after sensitive changes, or are exposed in unsafe places.",
+          "Sensitive data exposure: secrets, tokens, internal metadata, stack traces, or private records are visible to the wrong audience.",
+          "Security misconfiguration: debug pages, staging panels, overly broad CORS, permissive storage buckets, or default credentials remain exposed.",
+          "Dependency and supply-chain risk: vulnerable packages, abandoned libraries, or unsafe build artifacts create known exposure.",
+          "Missing rate limits: high-impact workflows such as login, invitations, exports, or password reset can be automated too freely."
+        ]
+      },
+      {
+        type: "CUSTOM",
+        title: "Proper Response To A Finding",
+        body: [
+          "Preserve evidence without spreading sensitive data beyond the incident or remediation group.",
+          "Triage severity by exploitability, affected users, data sensitivity, business impact, and compensating controls.",
+          "Confirm impact safely with test data and avoid expanding beyond the original authorization.",
+          "Notify accountable owners, assign remediation, and agree on a retest window.",
+          "Patch the root cause, add regression tests or security checks, rotate exposed secrets if needed, and document the lesson learned.",
+          "Retest the exact finding and close it only when evidence shows the risk is no longer present."
+        ]
+      },
+      {
+        type: "CUSTOM",
+        title: "Frequently Used Terms",
+        body: [
+          "Scope: the systems, accounts, data, and actions approved for testing.",
+          "Rules of engagement: the operational limits and communication plan for the assessment.",
+          "Reconnaissance: authorized discovery of assets, services, workflows, and technologies.",
+          "Attack surface: reachable interfaces and dependencies that could expose risk.",
+          "Vulnerability: a weakness that could compromise confidentiality, integrity, or availability.",
+          "Exploitability: how practical it is to trigger or abuse a vulnerability under real conditions.",
+          "Impact: the business or user harm that could result if the issue were abused.",
+          "CVSS: a scoring framework often used to help communicate vulnerability severity.",
+          "False positive: a reported issue that does not hold up in the actual application context.",
+          "Proof of concept: safe evidence that demonstrates a finding without causing harm.",
+          "Remediation: the fix or control that removes or reduces the risk.",
+          "Retest: follow-up validation that the remediation worked.",
+          "Responsible disclosure: reporting a vulnerability through an agreed, non-public process so owners can fix it."
+        ]
+      }
+    ],
+    codeExamples: [
+      {
+        title: "Cross-Account Project Data",
+        description:
+          "Broken access control in a project-management app, validated only with seeded test accounts.",
+        language: "md",
+        code:
+          "System: AcmeBoards, a project-management application used in a staging assessment.\n\nSetup: The rules of engagement allow two seeded tenants: Northwind Test Co. and Contoso Demo LLC. The tester receives one standard user account in each tenant and is explicitly prohibited from touching real customer data.\n\nObservation: While reviewing normal project navigation, the tester notices that project detail URLs use predictable numeric identifiers. Using only the two assigned test tenants, the tester confirms that a Contoso test user can view a Northwind seeded project summary when referencing a known test project identifier.\n\nEvidence: The report includes timestamps, the two test account IDs, the affected staging URL pattern, screenshots with seeded project names, and a short impact statement: cross-tenant read access to project metadata.\n\nResponse: Engineering moves the authorization check from the client route guard into the server-side project lookup, adds a tenant ownership predicate to the data query, creates a regression test for cross-tenant access, and asks the tester to retest the same scenario. The retest confirms Contoso now receives a generic not-found response for Northwind projects."
+      },
+      {
+        title: "Reflected Search Text",
+        description:
+          "Reflected XSS risk in a search page, described without reusable exploit payloads.",
+        language: "md",
+        code:
+          "System: OrbitShop, an e-commerce demo site inside an approved QA environment.\n\nSetup: The tester is scoped to the public catalog, search page, and test-only accounts. The rules of engagement prohibit disruptive payloads and require safe marker strings.\n\nObservation: The tester enters a harmless marker phrase into the search box and sees it reflected in a results banner without output encoding. A safe browser-side check confirms the page treats reflected input as markup rather than plain text.\n\nEvidence: The report avoids weaponized payloads and instead shows the exact marker phrase, the affected component, browser version, response context, and a screenshot demonstrating unsafe rendering with seeded catalog data.\n\nResponse: The team updates the results banner to render user input as text, reviews the page's Content Security Policy, adds a component test for escaped output, and adds a regression test using the same harmless marker phrase. Retesting confirms the marker is displayed as text only."
+      },
+      {
+        title: "Exposed Staging Admin Panel",
+        description:
+          "Discovery of an exposed admin surface in a SaaS deployment without bypassing access controls.",
+        language: "md",
+        code:
+          "System: LedgerPilot, a finance SaaS with a staging environment included in the engagement scope.\n\nSetup: The rules of engagement allow discovery of staging routes and service metadata but prohibit authentication bypass attempts, brute force, or access to production systems.\n\nObservation: During in-scope asset review, the tester finds a staging admin login page indexed by a predictable subdomain. The tester does not attempt to bypass login. Page metadata reveals internal release names and a build identifier that should not be public.\n\nEvidence: The finding includes the staging hostname, response headers, screenshot of the login page, the exposed release metadata, and an impact statement: unnecessary exposure increases reconnaissance value and invites credential attacks.\n\nResponse: Operations restricts the admin panel to VPN and approved office IP ranges, removes release metadata from unauthenticated responses, adds deployment checks for public admin routes, and updates monitoring to alert on unexpected internet exposure. Retesting confirms the panel is no longer publicly reachable."
+      }
+    ],
+    relatedConceptSlugs: ["unit-testing"],
+    flashcards: penetrationTestingFlashcards,
     quizQuestions: []
   },
   {
