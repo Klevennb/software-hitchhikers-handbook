@@ -1,0 +1,418 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>SYSTEM_DESIGN_ARCHITECT: SCALABILITY</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&amp;family=JetBrains+Mono:wght@400;500;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<style>
+        .grid-paper {
+            background-image: 
+                linear-gradient(to right, rgba(0, 242, 255, 0.05) 1px, transparent 1px),
+                linear-gradient(to bottom, rgba(0, 242, 255, 0.05) 1px, transparent 1px);
+            background-size: 24px 24px;
+        }
+        .neon-glow {
+            box-shadow: 0 0 15px rgba(0, 219, 231, 0.3);
+        }
+        .dashed-path {
+            stroke-dasharray: 8;
+            animation: dash 20s linear infinite;
+        }
+        @keyframes dash {
+            to { stroke-dashoffset: -1000; }
+        }
+        .glass-panel {
+            backdrop-filter: blur(12px);
+            border: 1px solid rgba(132, 148, 149, 0.2);
+        }
+        .bracket-hover:hover .bracket-left::before { content: '['; margin-right: 4px; color: #74f5ff; }
+        .bracket-hover:hover .bracket-right::after { content: ']'; margin-left: 4px; color: #74f5ff; }
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+    </style>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    "colors": {
+                        "surface-container-low": "#1a1b21",
+                        "surface-container-high": "#292a2f",
+                        "on-tertiary": "#003824",
+                        "background": "#121318",
+                        "surface-variant": "#34343a",
+                        "surface-container": "#1e1f25",
+                        "inverse-surface": "#e3e1e9",
+                        "secondary-container": "#6f00be",
+                        "surface-bright": "#38393f",
+                        "inverse-on-surface": "#2f3036",
+                        "primary-fixed": "#74f5ff",
+                        "secondary-fixed-dim": "#ddb7ff",
+                        "on-error": "#690005",
+                        "error": "#ffb4ab",
+                        "surface-container-lowest": "#0d0e13",
+                        "on-surface": "#e3e1e9",
+                        "on-secondary": "#490080",
+                        "on-secondary-fixed-variant": "#6900b3",
+                        "tertiary-container": "#67f4b7",
+                        "on-tertiary-fixed-variant": "#005236",
+                        "primary-container": "#00f2ff",
+                        "on-primary-fixed": "#002022",
+                        "on-primary": "#00363a",
+                        "primary": "#e1fdff",
+                        "on-tertiary-fixed": "#002113",
+                        "on-secondary-container": "#d6a9ff",
+                        "inverse-primary": "#00696f",
+                        "outline": "#849495",
+                        "tertiary-fixed-dim": "#4edea3",
+                        "secondary-fixed": "#f0dbff",
+                        "on-error-container": "#ffdad6",
+                        "secondary": "#ddb7ff",
+                        "surface-dim": "#121318",
+                        "error-container": "#93000a",
+                        "on-secondary-fixed": "#2c0051",
+                        "on-background": "#e3e1e9",
+                        "on-surface-variant": "#b9cacb",
+                        "primary-fixed-dim": "#00dbe7",
+                        "surface-tint": "#00dbe7",
+                        "surface": "#121318",
+                        "outline-variant": "#3a494b",
+                        "on-tertiary-container": "#006e4b",
+                        "tertiary": "#e1ffec",
+                        "tertiary-fixed": "#6ffbbe",
+                        "surface-container-highest": "#34343a",
+                        "on-primary-container": "#006a71",
+                        "on-primary-fixed-variant": "#004f54"
+                    },
+                    "borderRadius": {
+                        "DEFAULT": "0.125rem",
+                        "lg": "0.25rem",
+                        "xl": "0.5rem",
+                        "full": "0.75rem"
+                    },
+                    "spacing": {
+                        "base": "8px",
+                        "gutter": "24px",
+                        "margin-desktop": "64px",
+                        "margin-mobile": "16px",
+                        "container-max": "1200px"
+                    },
+                    "fontFamily": {
+                        "body-md": ["Inter"],
+                        "nav-label": ["JetBrains Mono"],
+                        "body-lg": ["Inter"],
+                        "code-block": ["JetBrains Mono"],
+                        "headline-lg": ["Inter"],
+                        "headline-md": ["Inter"],
+                        "headline-xl": ["Inter"]
+                    },
+                    "fontSize": {
+                        "body-md": ["16px", {"lineHeight": "24px", "fontWeight": "400"}],
+                        "nav-label": ["12px", {"lineHeight": "16px", "letterSpacing": "0.1em", "fontWeight": "500"}],
+                        "body-lg": ["18px", {"lineHeight": "28px", "fontWeight": "400"}],
+                        "code-block": ["14px", {"lineHeight": "20px", "fontWeight": "400"}],
+                        "headline-lg": ["32px", {"lineHeight": "40px", "letterSpacing": "-0.01em", "fontWeight": "700"}],
+                        "headline-md": ["24px", {"lineHeight": "32px", "fontWeight": "600"}],
+                        "headline-xl": ["48px", {"lineHeight": "56px", "letterSpacing": "-0.02em", "fontWeight": "800"}]
+                    }
+                },
+            },
+        }
+    </script>
+</head>
+<body class="bg-background text-on-background font-body-md selection:bg-primary-container/30">
+<!-- TopNavBar -->
+<header class="fixed top-0 w-full z-50 flex justify-between items-center px-margin-desktop h-16 bg-surface-container/60 backdrop-blur-xl border-b border-outline-variant/20">
+<div class="flex items-center gap-base">
+<span class="font-nav-label text-nav-label tracking-widest text-primary-container">CYBERSPACE_NEXUS_v1.0</span>
+</div>
+<nav class="hidden md:flex gap-gutter">
+<a class="text-on-surface-variant font-medium hover:text-primary-fixed-dim transition-colors duration-300 font-nav-label text-nav-label" href="#">DOMAINS</a>
+<a class="text-on-surface-variant font-medium hover:text-primary-fixed-dim transition-colors duration-300 font-nav-label text-nav-label" href="#">ARCHIVE</a>
+<a class="text-primary-fixed font-bold border-b border-primary-fixed font-nav-label text-nav-label" href="#">TERMINAL</a>
+</nav>
+<div class="flex items-center gap-gutter">
+<div class="relative">
+<span class="material-symbols-outlined text-primary-fixed-dim">account_tree</span>
+</div>
+<img alt="Engineer Avatar" class="w-8 h-8 rounded-full border border-primary-fixed-dim/30" data-alt="A professional close-up portrait of a senior software engineer in a dark, high-tech environment. The lighting is low-key with subtle cyan rim lighting reflecting off their features. They are wearing a dark, minimalist technical jacket. The background is softly blurred with hints of glowing server racks and digital interfaces, maintaining a futuristic and professional aesthetic." src="https://lh3.googleusercontent.com/aida-public/AB6AXuDZyvxdlU3J2OwnSrgP7qgtc5zr9ycrE4rhJay3Ub7ZO8L_f7pN9EfwCQeBHrPIiGCiCjfslHwrnHXxtaEfkRX1rBxch4EPPslcvKfdlPDfqauZ1PgKL9e6xHtMd2yxJhCQ65Jtpn6yl5ztSh4e1lSXDGIwHHITuwAnRmA8SH8oolN0ZHq58hBRMyDQZjYMK8WM2_aT162JQJLqhAJJC6pIJmI_8j7vgv7P9Jti6f33GQjV7KPoxDsF0c7heZlgCG56yfZPIrN0Drdd"/>
+</div>
+</header>
+<!-- SideNavBar -->
+<aside class="fixed left-0 top-16 h-[calc(100vh-64px)] w-64 flex flex-col justify-between py-gutter z-40 bg-surface-container-lowest/80 backdrop-blur-2xl border-r border-outline-variant/20">
+<div class="px-base">
+<div class="flex items-center gap-3 mb-8 px-base">
+<div class="w-10 h-10 bg-primary-container/10 flex items-center justify-center rounded-lg border border-primary-fixed-dim/20">
+<span class="material-symbols-outlined text-primary-fixed-dim">terminal</span>
+</div>
+<div>
+<div class="font-headline-md text-headline-md text-primary-fixed-dim scale-75 origin-left">NODE_734</div>
+<div class="font-nav-label text-[10px] text-on-surface-variant opacity-70">Senior_Eng_Auth</div>
+</div>
+</div>
+<nav class="space-y-2">
+<a class="flex items-center gap-3 text-on-surface-variant p-base hover:bg-surface-variant/30 transition-all duration-200 group bracket-hover" href="#">
+<span class="material-symbols-outlined text-xl group-hover:text-primary-fixed transition-colors">hub</span>
+<span class="font-nav-label text-nav-label bracket-left bracket-right uppercase">THE_NEXUS</span>
+</a>
+<a class="flex items-center gap-3 text-primary-fixed font-bold bg-primary-container/10 border-r-2 border-primary-fixed p-base bracket-hover" href="#">
+<span class="material-symbols-outlined text-xl" data-weight="fill" style="font-variation-settings: 'FILL' 1;">architecture</span>
+<span class="font-nav-label text-nav-label bracket-left bracket-right uppercase">SYSTEMS</span>
+</a>
+<a class="flex items-center gap-3 text-on-surface-variant p-base hover:bg-surface-variant/30 transition-all duration-200 group bracket-hover" href="#">
+<span class="material-symbols-outlined text-xl group-hover:text-primary-fixed transition-colors">code</span>
+<span class="font-nav-label text-nav-label bracket-left bracket-right uppercase">LANGUAGES</span>
+</a>
+<a class="flex items-center gap-3 text-on-surface-variant p-base hover:bg-surface-variant/30 transition-all duration-200 group bracket-hover" href="#">
+<span class="material-symbols-outlined text-xl group-hover:text-primary-fixed transition-colors">quiz</span>
+<span class="font-nav-label text-nav-label bracket-left bracket-right uppercase">FLASHCARDS</span>
+</a>
+</nav>
+</div>
+<div class="px-base">
+<nav class="space-y-1">
+<a class="flex items-center gap-3 text-on-surface-variant p-base hover:text-primary-fixed transition-all group" href="#">
+<span class="material-symbols-outlined text-lg">description</span>
+<span class="font-nav-label text-[11px] uppercase">Documentation</span>
+</a>
+<a class="flex items-center gap-3 text-on-surface-variant p-base hover:text-primary-fixed transition-all group" href="#">
+<span class="material-symbols-outlined text-lg">help_center</span>
+<span class="font-nav-label text-[11px] uppercase">Terminal_Help</span>
+</a>
+</nav>
+</div>
+</aside>
+<!-- Main Content -->
+<main class="ml-64 pt-16 min-h-screen px-margin-desktop py-gutter">
+<!-- Header Section -->
+<header class="mb-12">
+<div class="flex items-center gap-base mb-2">
+<span class="w-2 h-2 bg-primary-container neon-glow rounded-full"></span>
+<span class="font-code-block text-code-block text-primary-fixed-dim opacity-70">STATUS: OPERATIONAL // ENCRYPT_LEVEL: 4</span>
+</div>
+<h1 class="font-headline-xl text-headline-xl text-primary-fixed tracking-tight">
+                SYSTEM_DESIGN_ARCHITECT: <span class="text-on-surface">SCALABILITY</span>
+</h1>
+<p class="mt-4 text-on-surface-variant font-body-lg text-body-lg max-w-3xl">
+                Engineering for planetary scale requires a fundamental shift in how we perceive data flow. Below is the blueprint for a high-availability distributed architecture designed to sustain 1M+ concurrent connections.
+            </p>
+</header>
+<div class="grid grid-cols-12 gap-gutter">
+<!-- Left Content: Concepts Bento -->
+<div class="col-span-12 lg:col-span-8 space-y-gutter">
+<!-- Overview Cards -->
+<div class="grid grid-cols-1 md:grid-cols-3 gap-gutter">
+<div class="glass-panel p-gutter bg-surface-container/40 rounded-lg group hover:border-primary-container/50 transition-all">
+<div class="flex justify-between items-start mb-4">
+<span class="material-symbols-outlined text-primary-fixed-dim">balance</span>
+<span class="font-code-block text-[10px] text-outline">SRL-001</span>
+</div>
+<h3 class="font-headline-md text-headline-md mb-2 text-primary">Load Balancing</h3>
+<p class="text-on-surface-variant text-sm">Distributing incoming network traffic across multiple servers to ensure no single server bears too much load.</p>
+</div>
+<div class="glass-panel p-gutter bg-surface-container/40 rounded-lg group hover:border-primary-container/50 transition-all">
+<div class="flex justify-between items-start mb-4">
+<span class="material-symbols-outlined text-primary-fixed-dim">database</span>
+<span class="font-code-block text-[10px] text-outline">SRL-002</span>
+</div>
+<h3 class="font-headline-md text-headline-md mb-2 text-primary">DB Sharding</h3>
+<p class="text-on-surface-variant text-sm">Horizontal partitioning of data across multiple databases to improve read/write performance and storage capacity.</p>
+</div>
+<div class="glass-panel p-gutter bg-surface-container/40 rounded-lg group hover:border-primary-container/50 transition-all">
+<div class="flex justify-between items-start mb-4">
+<span class="material-symbols-outlined text-primary-fixed-dim">memory</span>
+<span class="font-code-block text-[10px] text-outline">SRL-003</span>
+</div>
+<h3 class="font-headline-md text-headline-md mb-2 text-primary">Caching</h3>
+<p class="text-on-surface-variant text-sm">Storing copies of frequently accessed data in high-speed storage layers like Redis to reduce latency.</p>
+</div>
+</div>
+<!-- Interactive Diagram Area -->
+<div class="relative glass-panel bg-surface-container-lowest/60 rounded-xl overflow-hidden min-h-[500px] flex flex-col">
+<div class="p-gutter border-b border-outline-variant/20 flex justify-between items-center bg-surface-container/40">
+<div class="flex items-center gap-base">
+<span class="material-symbols-outlined text-primary-container text-sm">schema</span>
+<span class="font-nav-label text-nav-label uppercase tracking-widest">Live Architecture Simulation</span>
+</div>
+<div class="flex gap-2">
+<button class="px-3 py-1 text-[10px] font-nav-label border border-primary-container/30 text-primary-container hover:bg-primary-container/10 transition-all">REBOOT</button>
+<button class="px-3 py-1 text-[10px] font-nav-label bg-primary-container text-background font-bold">EXPORT_SVG</button>
+</div>
+</div>
+<!-- SVG Diagram Canvas -->
+<div class="flex-grow grid-paper p-gutter relative flex items-center justify-center">
+<svg class="w-full h-full max-w-[800px] max-h-[400px]" fill="none" viewbox="0 0 800 400" xmlns="http://www.w3.org/2000/svg">
+<!-- Paths -->
+<path class="dashed-path" d="M120 200 H200" stroke="#00f2ff" stroke-width="2"></path>
+<path class="dashed-path" d="M360 200 C400 200 400 100 460 100" opacity="0.4" stroke="#00f2ff" stroke-width="2"></path>
+<path class="dashed-path" d="M360 200 C400 200 400 200 460 200" stroke="#00f2ff" stroke-width="2"></path>
+<path class="dashed-path" d="M360 200 C400 200 400 300 460 300" opacity="0.4" stroke="#00f2ff" stroke-width="2"></path>
+<path d="M600 100 H660" stroke="#74f5ff" stroke-dasharray="4" stroke-width="1"></path>
+<path d="M600 200 H660" stroke="#74f5ff" stroke-dasharray="4" stroke-width="1"></path>
+<path d="M600 300 H660" stroke="#74f5ff" stroke-dasharray="4" stroke-width="1"></path>
+<!-- User Request Node -->
+<g transform="translate(20, 175)">
+<rect fill="#1e1f25" height="50" rx="4" stroke="#00f2ff" stroke-width="2" width="100"></rect>
+<text fill="#e3e1e9" font-family="JetBrains Mono" font-size="10" text-anchor="middle" x="50" y="30">USER_REQ</text>
+<circle cx="100" cy="25" fill="#00f2ff" r="4"></circle>
+</g>
+<!-- Load Balancer Node -->
+<g transform="translate(200, 160)">
+<rect class="neon-glow" fill="#1a1b21" height="80" rx="8" stroke="#00f2ff" stroke-width="2" width="160"></rect>
+<text fill="#00f2ff" font-family="JetBrains Mono" font-size="12" font-weight="bold" text-anchor="middle" x="80" y="40">LOAD_BALANCER</text>
+<text fill="#849495" font-family="JetBrains Mono" font-size="8" text-anchor="middle" x="80" y="55">NGINX / HAPROXY</text>
+<circle cx="0" cy="40" fill="#00f2ff" r="4"></circle>
+</g>
+<!-- Web Servers Cluster -->
+<g transform="translate(460, 70)">
+<rect fill="#1e1f25" height="60" rx="4" stroke="#3a494b" stroke-width="1" width="140"></rect>
+<text fill="#e3e1e9" font-family="JetBrains Mono" font-size="10" text-anchor="middle" x="70" y="35">NODE_SERVER_A</text>
+</g>
+<g transform="translate(460, 170)">
+<rect fill="#1e1f25" height="60" rx="4" stroke="#00f2ff" stroke-width="1" width="140"></rect>
+<text fill="#e3e1e9" font-family="JetBrains Mono" font-size="10" text-anchor="middle" x="70" y="35">NODE_SERVER_B</text>
+<rect class="animate-pulse" fill="#00f2ff" height="10" rx="2" width="10" x="125" y="5"></rect>
+</g>
+<g transform="translate(460, 270)">
+<rect fill="#1e1f25" height="60" rx="4" stroke="#3a494b" stroke-width="1" width="140"></rect>
+<text fill="#e3e1e9" font-family="JetBrains Mono" font-size="10" text-anchor="middle" x="70" y="35">NODE_SERVER_C</text>
+</g>
+<!-- Databases -->
+<g transform="translate(660, 150)">
+<path d="M0 10 C0 0 100 0 100 10 V90 C100 100 0 100 0 90 Z" fill="#0d0e13" stroke="#00f2ff" stroke-width="2"></path>
+<path d="M0 10 C0 20 100 20 100 10" fill="none" stroke="#00f2ff" stroke-width="2"></path>
+<text fill="#00f2ff" font-family="JetBrains Mono" font-size="10" font-weight="bold" text-anchor="middle" x="50" y="55">SHARDED_DB</text>
+<text fill="#849495" font-family="JetBrains Mono" font-size="8" text-anchor="middle" x="50" y="70">POSTGRESQL</text>
+</g>
+</svg>
+<!-- Legend Overlay -->
+<div class="absolute bottom-4 right-4 flex gap-gutter">
+<div class="flex items-center gap-2">
+<span class="w-3 h-0.5 bg-primary-container"></span>
+<span class="font-nav-label text-[10px] text-on-surface-variant">Active Flow</span>
+</div>
+<div class="flex items-center gap-2">
+<span class="w-3 h-0.5 border-t border-dashed border-primary-fixed-dim"></span>
+<span class="font-nav-label text-[10px] text-on-surface-variant">Standby</span>
+</div>
+</div>
+</div>
+</div>
+<!-- Code Example -->
+<div class="rounded-lg overflow-hidden border border-outline-variant/20">
+<div class="bg-surface-container-high px-gutter py-2 flex justify-between items-center">
+<span class="font-nav-label text-nav-label text-primary-fixed-dim">nginx.conf</span>
+<button class="material-symbols-outlined text-sm text-on-surface-variant hover:text-primary-fixed">content_copy</button>
+</div>
+<pre class="bg-black p-gutter font-code-block text-code-block text-on-surface leading-relaxed"><span class="text-tertiary-fixed-dim">upstream</span> backend_nodes {
+    <span class="text-primary-fixed-dim">server</span> 10.0.0.1:8080 weight=5;
+    <span class="text-primary-fixed-dim">server</span> 10.0.0.2:8080;
+    <span class="text-primary-fixed-dim">server</span> 10.0.0.3:8080 backup;
+}
+
+<span class="text-tertiary-fixed-dim">server</span> {
+    <span class="text-primary-fixed-dim">listen</span> 80;
+    <span class="text-primary-fixed-dim">location</span> / {
+        proxy_pass http://backend_nodes;
+    }
+}</pre>
+</div>
+</div>
+<!-- Right Sidebar: Patterns -->
+<aside class="col-span-12 lg:col-span-4 space-y-gutter">
+<div class="glass-panel p-gutter bg-surface-container/40 rounded-lg">
+<h2 class="font-headline-md text-headline-md text-primary mb-gutter border-b border-outline-variant/20 pb-2">ARCH_PATTERNS</h2>
+<div class="space-y-4">
+<div class="p-base hover:bg-primary-container/5 border border-transparent hover:border-primary-container/20 rounded cursor-pointer transition-all group">
+<div class="flex items-center gap-base mb-1">
+<span class="material-symbols-outlined text-primary-fixed-dim text-lg">widgets</span>
+<span class="font-nav-label text-nav-label text-primary-fixed">MICROSERVICES</span>
+</div>
+<p class="text-xs text-on-surface-variant">Decomposing a system into a collection of small, independent services.</p>
+</div>
+<div class="p-base hover:bg-primary-container/5 border border-transparent hover:border-primary-container/20 rounded cursor-pointer transition-all group">
+<div class="flex items-center gap-base mb-1">
+<span class="material-symbols-outlined text-primary-fixed-dim text-lg">bolt</span>
+<span class="font-nav-label text-nav-label text-primary-fixed">EVENT-DRIVEN</span>
+</div>
+<p class="text-xs text-on-surface-variant">Services communicate via events, enabling high decoupling and scalability.</p>
+</div>
+<div class="p-base hover:bg-primary-container/5 border border-transparent hover:border-primary-container/20 rounded cursor-pointer transition-all group">
+<div class="flex items-center gap-base mb-1">
+<span class="material-symbols-outlined text-primary-fixed-dim text-lg">cloud_done</span>
+<span class="font-nav-label text-nav-label text-primary-fixed">SERVERLESS</span>
+</div>
+<p class="text-xs text-on-surface-variant">Functions-as-a-Service (FaaS) that scale automatically based on demand.</p>
+</div>
+<div class="p-base hover:bg-primary-container/5 border border-transparent hover:border-primary-container/20 rounded cursor-pointer transition-all group opacity-50">
+<div class="flex items-center gap-base mb-1">
+<span class="material-symbols-outlined text-primary-fixed-dim text-lg">hub</span>
+<span class="font-nav-label text-nav-label text-primary-fixed">SERVICE_MESH</span>
+</div>
+<p class="text-xs text-on-surface-variant">Dedicated infrastructure layer for service-to-service communication.</p>
+</div>
+</div>
+</div>
+<!-- Metric Card -->
+<div class="glass-panel p-gutter bg-surface-container/40 rounded-lg relative overflow-hidden">
+<div class="absolute -right-8 -top-8 w-24 h-24 bg-primary-container/10 blur-3xl rounded-full"></div>
+<div class="font-nav-label text-[10px] text-outline mb-2">TARGET_LATENCY</div>
+<div class="flex items-end gap-2 mb-4">
+<span class="font-headline-xl text-headline-xl text-primary-container leading-none">24<span class="text-headline-md opacity-60">ms</span></span>
+<span class="text-tertiary-fixed-dim text-xs mb-1 flex items-center gap-1">
+<span class="material-symbols-outlined text-sm">trending_down</span> -12%
+                        </span>
+</div>
+<div class="h-1 bg-surface-variant rounded-full overflow-hidden">
+<div class="h-full w-[85%] bg-primary-container shadow-[0_0_10px_rgba(0,242,255,0.5)]"></div>
+</div>
+<div class="flex justify-between mt-2 font-nav-label text-[9px] text-outline uppercase">
+<span>Current Load</span>
+<span>Capacity (85%)</span>
+</div>
+</div>
+<!-- Quick Actions -->
+<div class="grid grid-cols-2 gap-2">
+<button class="p-base glass-panel bg-surface-container/20 hover:bg-primary-container/10 text-on-surface-variant hover:text-primary-fixed flex flex-col items-center gap-1 transition-all">
+<span class="material-symbols-outlined text-xl">history</span>
+<span class="font-nav-label text-[9px]">HISTORY</span>
+</button>
+<button class="p-base glass-panel bg-surface-container/20 hover:bg-primary-container/10 text-on-surface-variant hover:text-primary-fixed flex flex-col items-center gap-1 transition-all">
+<span class="material-symbols-outlined text-xl">share</span>
+<span class="font-nav-label text-[9px]">COLLABORATE</span>
+</button>
+</div>
+</aside>
+</div>
+</main>
+<!-- Floating Action Button (FAB) - Only on main dashboard pages -->
+<button class="fixed bottom-8 right-8 w-14 h-14 bg-primary-container text-on-primary-container rounded-full shadow-[0_0_20px_rgba(0,242,255,0.4)] hover:scale-110 active:scale-95 transition-all flex items-center justify-center z-50">
+<span class="material-symbols-outlined text-2xl" data-weight="fill" style="font-variation-settings: 'FILL' 1;">add</span>
+</button>
+<script>
+        // Simple Interaction: Button Ripple and Pulse Effects
+        document.querySelectorAll('button').forEach(btn => {
+            btn.addEventListener('mousedown', function() {
+                this.classList.add('scale-95');
+            });
+            btn.addEventListener('mouseup', function() {
+                this.classList.remove('scale-95');
+            });
+            btn.addEventListener('mouseleave', function() {
+                this.classList.remove('scale-95');
+            });
+        });
+
+        // Atmospheric grid mouse follow (optional micro-interaction)
+        document.body.addEventListener('mousemove', (e) => {
+            const x = e.clientX;
+            const y = e.clientY;
+            // Potentially add a radial gradient background that follows the cursor
+        });
+    </script>
+</body></html>

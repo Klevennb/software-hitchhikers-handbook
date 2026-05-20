@@ -1,0 +1,386 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>CYBERSPACE_NEXUS_v1.0</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&amp;family=JetBrains+Mono:wght@400;500;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    "colors": {
+                        "surface-container-low": "#1a1b21",
+                        "surface-container-high": "#292a2f",
+                        "on-tertiary": "#003824",
+                        "background": "#121318",
+                        "surface-variant": "#34343a",
+                        "surface-container": "#1e1f25",
+                        "inverse-surface": "#e3e1e9",
+                        "secondary-container": "#6f00be",
+                        "surface-bright": "#38393f",
+                        "inverse-on-surface": "#2f3036",
+                        "primary-fixed": "#74f5ff",
+                        "secondary-fixed-dim": "#ddb7ff",
+                        "on-error": "#690005",
+                        "error": "#ffb4ab",
+                        "surface-container-lowest": "#0d0e13",
+                        "on-surface": "#e3e1e9",
+                        "on-secondary": "#490080",
+                        "on-secondary-fixed-variant": "#6900b3",
+                        "tertiary-container": "#67f4b7",
+                        "on-tertiary-fixed-variant": "#005236",
+                        "primary-container": "#00f2ff",
+                        "on-primary-fixed": "#002022",
+                        "on-primary": "#00363a",
+                        "primary": "#e1fdff",
+                        "on-tertiary-fixed": "#002113",
+                        "on-secondary-container": "#d6a9ff",
+                        "inverse-primary": "#00696f",
+                        "outline": "#849495",
+                        "tertiary-fixed-dim": "#4edea3",
+                        "secondary-fixed": "#f0dbff",
+                        "on-error-container": "#ffdad6",
+                        "secondary": "#ddb7ff",
+                        "surface-dim": "#121318",
+                        "error-container": "#93000a",
+                        "on-secondary-fixed": "#2c0051",
+                        "on-background": "#e3e1e9",
+                        "on-surface-variant": "#b9cacb",
+                        "primary-fixed-dim": "#00dbe7",
+                        "surface-tint": "#00dbe7",
+                        "surface": "#121318",
+                        "outline-variant": "#3a494b",
+                        "on-tertiary-container": "#006e4b",
+                        "tertiary": "#e1ffec",
+                        "tertiary-fixed": "#6ffbbe",
+                        "surface-container-highest": "#34343a",
+                        "on-primary-container": "#006a71",
+                        "on-primary-fixed-variant": "#004f54"
+                    },
+                    "borderRadius": {
+                        "DEFAULT": "0.125rem",
+                        "lg": "0.25rem",
+                        "xl": "0.5rem",
+                        "full": "0.75rem"
+                    },
+                    "spacing": {
+                        "base": "8px",
+                        "gutter": "24px",
+                        "margin-desktop": "64px",
+                        "margin-mobile": "16px",
+                        "container-max": "1200px"
+                    },
+                    "fontFamily": {
+                        "body-md": ["Inter"],
+                        "nav-label": ["JetBrains Mono"],
+                        "body-lg": ["Inter"],
+                        "headline-lg-mobile": ["Inter"],
+                        "code-block": ["JetBrains Mono"],
+                        "headline-lg": ["Inter"],
+                        "headline-md": ["Inter"],
+                        "headline-xl": ["Inter"]
+                    },
+                    "fontSize": {
+                        "body-md": ["16px", {"lineHeight": "24px", "fontWeight": "400"}],
+                        "nav-label": ["12px", {"lineHeight": "16px", "letterSpacing": "0.1em", "fontWeight": "500"}],
+                        "body-lg": ["18px", {"lineHeight": "28px", "fontWeight": "400"}],
+                        "headline-lg-mobile": ["28px", {"lineHeight": "36px", "fontWeight": "700"}],
+                        "code-block": ["14px", {"lineHeight": "20px", "fontWeight": "400"}],
+                        "headline-lg": ["32px", {"lineHeight": "40px", "letterSpacing": "-0.01em", "fontWeight": "700"}],
+                        "headline-md": ["24px", {"lineHeight": "32px", "fontWeight": "600"}],
+                        "headline-xl": ["48px", {"lineHeight": "56px", "letterSpacing": "-0.02em", "fontWeight": "800"}]
+                    }
+                },
+            },
+        }
+    </script>
+<style>
+        body {
+            background-color: #121318;
+            background-image: 
+                linear-gradient(rgba(0, 219, 231, 0.03) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(0, 219, 231, 0.03) 1px, transparent 1px);
+            background-size: 32px 32px;
+            color: #e3e1e9;
+        }
+        .glass-panel {
+            background: rgba(30, 31, 37, 0.6);
+            backdrop-filter: blur(12px);
+            border: 1px solid rgba(116, 245, 255, 0.1);
+        }
+        .glow-cyan {
+            box-shadow: 0 0 15px rgba(116, 245, 255, 0.2);
+        }
+        .glow-text-cyan {
+            text-shadow: 0 0 8px rgba(116, 245, 255, 0.6);
+        }
+        .terminal-cursor {
+            display: inline-block;
+            width: 8px;
+            height: 18px;
+            background: #00dbe7;
+            animation: blink 1s step-end infinite;
+            vertical-align: middle;
+            margin-left: 4px;
+        }
+        @keyframes blink {
+            50% { opacity: 0; }
+        }
+    </style>
+</head>
+<body class="font-body-md text-body-md overflow-x-hidden">
+<!-- Top Navigation Shell -->
+<header class="fixed top-0 w-full z-50 flex justify-between items-center px-margin-desktop h-16 bg-surface-container/60 backdrop-blur-xl border-b border-outline-variant/20">
+<div class="flex items-center gap-4">
+<span class="font-nav-label text-nav-label tracking-widest text-primary-container">CYBERSPACE_NEXUS_v1.0</span>
+</div>
+<nav class="hidden md:flex gap-gutter">
+<a class="text-primary-fixed font-bold border-b border-primary-fixed font-nav-label text-nav-label" href="#">DOMAINS</a>
+<a class="text-on-surface-variant font-medium hover:text-primary-fixed-dim transition-colors duration-300 font-nav-label text-nav-label" href="#">ARCHIVE</a>
+<a class="text-on-surface-variant font-medium hover:text-primary-fixed-dim transition-colors duration-300 font-nav-label text-nav-label" href="#">TERMINAL</a>
+</nav>
+<div class="flex items-center gap-4">
+<span class="material-symbols-outlined text-on-surface-variant cursor-pointer hover:text-primary-fixed" data-icon="settings">settings</span>
+<span class="material-symbols-outlined text-on-surface-variant cursor-pointer hover:text-primary-fixed" data-icon="account_tree">account_tree</span>
+<div class="w-8 h-8 rounded-full bg-surface-variant border border-outline-variant/30 flex items-center justify-center overflow-hidden">
+<img alt="Engineer Avatar" class="w-full h-full object-cover" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBpMjBCy4iB5eTADcW7c_f1V_W9Vmd1Zxxwl87yvQGyEtDtdS87wtWMUHcTvkfPH8We5VxXismP_veFwUHE40gP-bCRReLdahjUIc9RXNoHC7jqCIfWYP1XKzVX1AxSoXmNjStepswxm7AbmBG-tub1YNkgELAjBoTopcpLYSCVakNvFyr1Tjd9v_lqNv6D13-_AJCRKHHPP7GTXoCWr92xEc3CbLjBarccfRRZNwQbKmYqaUItMnbhZOnB0INwL7T66mcFqs_8J1-c"/>
+</div>
+</div>
+</header>
+<!-- Side Navigation Shell -->
+<aside class="fixed left-0 top-16 h-[calc(100vh-64px)] w-64 flex flex-col justify-between py-gutter z-40 bg-surface-container-lowest/80 backdrop-blur-2xl border-r border-outline-variant/20 hidden md:flex">
+<div class="flex flex-col gap-2">
+<div class="px-gutter mb-6">
+<div class="font-code-block text-code-block text-primary">NODE_734</div>
+<div class="text-[10px] text-on-surface-variant opacity-60">Senior_Eng_Auth</div>
+</div>
+<a class="flex items-center gap-3 text-primary-fixed font-bold bg-primary-container/10 border-r-2 border-primary-fixed p-base group" href="#">
+<span class="material-symbols-outlined" data-icon="hub">hub</span>
+<span class="font-nav-label text-nav-label group-hover:before:content-['['] group-hover:after:content-[']']">THE_NEXUS</span>
+</a>
+<a class="flex items-center gap-3 text-on-surface-variant p-base hover:bg-surface-variant/30 transition-all duration-200 group" href="#">
+<span class="material-symbols-outlined" data-icon="code">code</span>
+<span class="font-nav-label text-nav-label group-hover:before:content-['['] group-hover:after:content-[']']">LANGUAGES</span>
+</a>
+<a class="flex items-center gap-3 text-on-surface-variant p-base hover:bg-surface-variant/30 transition-all duration-200 group" href="#">
+<span class="material-symbols-outlined" data-icon="architecture">architecture</span>
+<span class="font-nav-label text-nav-label group-hover:before:content-['['] group-hover:after:content-[']']">SYSTEMS</span>
+</a>
+<a class="flex items-center gap-3 text-on-surface-variant p-base hover:bg-surface-variant/30 transition-all duration-200 group" href="#">
+<span class="material-symbols-outlined" data-icon="quiz">quiz</span>
+<span class="font-nav-label text-nav-label group-hover:before:content-['['] group-hover:after:content-[']']">FLASHCARDS</span>
+</a>
+<a class="flex items-center gap-3 text-on-surface-variant p-base hover:bg-surface-variant/30 transition-all duration-200 group" href="#">
+<span class="material-symbols-outlined" data-icon="terminal">terminal</span>
+<span class="font-nav-label text-nav-label group-hover:before:content-['['] group-hover:after:content-[']']">SETTINGS</span>
+</a>
+</div>
+<div class="px-base flex flex-col gap-2">
+<a class="flex items-center gap-3 text-on-surface-variant/60 hover:text-primary-fixed p-base transition-all duration-200" href="#">
+<span class="material-symbols-outlined text-[20px]" data-icon="description">description</span>
+<span class="font-nav-label text-[10px]">Documentation</span>
+</a>
+<a class="flex items-center gap-3 text-on-surface-variant/60 hover:text-primary-fixed p-base transition-all duration-200" href="#">
+<span class="material-symbols-outlined text-[20px]" data-icon="help_center">help_center</span>
+<span class="font-nav-label text-[10px]">Terminal_Help</span>
+</a>
+</div>
+</aside>
+<!-- Main Content Canvas -->
+<main class="md:pl-64 pt-16 min-h-screen">
+<div class="max-w-container-max mx-auto px-margin-mobile md:px-gutter py-gutter">
+<!-- Hero Section (Terminal Feel) -->
+<section class="mb-12 relative overflow-hidden rounded-xl bg-black border border-outline-variant/30 p-8 md:p-12">
+<div class="absolute top-0 right-0 p-4 font-code-block text-on-surface-variant/20 text-[10px] hidden md:block">
+                    STATUS: SYST_OPERATIONAL<br/>
+                    LATENCY: 14ms<br/>
+                    LOC: CORE_DATA_HUB
+                </div>
+<div class="relative z-10">
+<div class="font-code-block text-primary-fixed mb-4 flex items-center gap-2">
+<span class="opacity-50">&gt;</span>
+<span class="font-bold" id="typewriter">Initialize_Nexus v1.0</span>
+<span class="terminal-cursor"></span>
+</div>
+<h1 class="font-headline-xl text-headline-xl text-primary mb-6 max-w-2xl leading-tight">
+                        Navigate the <span class="text-primary-fixed glow-text-cyan">Digital Architecture</span> of Modern Software.
+                    </h1>
+<p class="font-body-lg text-body-lg text-on-surface-variant max-w-xl mb-8">
+                        Technical immersion for engineers who view code as physical landscape. Access core documentation, system schemas, and algorithmic archives.
+                    </p>
+<div class="flex flex-wrap gap-4">
+<button class="bg-primary-container text-on-primary-fixed font-bold py-3 px-8 rounded-DEFAULT hover:opacity-90 active:scale-95 transition-all">
+                            BEGIN_QUERY
+                        </button>
+<button class="border border-primary-container/40 text-primary-container font-medium py-3 px-8 rounded-DEFAULT backdrop-blur-sm hover:bg-primary-container/10 active:scale-95 transition-all">
+                            VIEW_SCHEMATICS
+                        </button>
+</div>
+</div>
+<!-- Abstract visual element -->
+<div class="absolute -bottom-24 -right-24 w-96 h-96 bg-primary-fixed/5 blur-[120px] rounded-full"></div>
+</section>
+<!-- Domain Selection Grid -->
+<section class="mb-16">
+<div class="flex items-end justify-between mb-8 border-l-4 border-primary-fixed pl-4">
+<div>
+<h2 class="font-headline-md text-headline-md text-primary">CORE_DOMAINS</h2>
+<p class="font-nav-label text-nav-label text-on-surface-variant">SELECT_MODULE_TO_LOAD</p>
+</div>
+<div class="text-on-surface-variant/40 font-code-block text-[10px] hidden md:block">
+                        004_ACTIVE_VECTORS
+                    </div>
+</div>
+<div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-gutter">
+<!-- Languages -->
+<div class="glass-panel p-6 rounded-xl group hover:border-primary-fixed transition-all duration-300 relative overflow-hidden">
+<div class="absolute top-2 right-2 font-code-block text-[10px] text-primary/30">SN: 101-LNG</div>
+<div class="w-12 h-12 flex items-center justify-center bg-primary-container/10 border border-primary-container/20 text-primary-fixed rounded mb-6 group-hover:glow-cyan transition-all">
+<span class="material-symbols-outlined text-[32px]" data-icon="code">code</span>
+</div>
+<h3 class="font-headline-md text-headline-md text-primary mb-2">Languages</h3>
+<p class="text-on-surface-variant text-body-md">Advanced syntax deep-dives and memory management paradigms for modern stacks.</p>
+<div class="mt-6 flex justify-end opacity-0 group-hover:opacity-100 transition-opacity">
+<span class="material-symbols-outlined text-primary-fixed" data-icon="arrow_forward">arrow_forward</span>
+</div>
+</div>
+<!-- System Design -->
+<div class="glass-panel p-6 rounded-xl group hover:border-primary-fixed transition-all duration-300 relative overflow-hidden">
+<div class="absolute top-2 right-2 font-code-block text-[10px] text-primary/30">SN: 204-SYS</div>
+<div class="w-12 h-12 flex items-center justify-center bg-primary-container/10 border border-primary-container/20 text-primary-fixed rounded mb-6 group-hover:glow-cyan transition-all">
+<span class="material-symbols-outlined text-[32px]" data-icon="architecture">architecture</span>
+</div>
+<h3 class="font-headline-md text-headline-md text-primary mb-2">System Design</h3>
+<p class="text-on-surface-variant text-body-md">Architecting scalable, distributed infrastructures and high-availability patterns.</p>
+<div class="mt-6 flex justify-end opacity-0 group-hover:opacity-100 transition-opacity">
+<span class="material-symbols-outlined text-primary-fixed" data-icon="arrow_forward">arrow_forward</span>
+</div>
+</div>
+<!-- Testing -->
+<div class="glass-panel p-6 rounded-xl group hover:border-primary-fixed transition-all duration-300 relative overflow-hidden">
+<div class="absolute top-2 right-2 font-code-block text-[10px] text-primary/30">SN: 308-TST</div>
+<div class="w-12 h-12 flex items-center justify-center bg-primary-container/10 border border-primary-container/20 text-primary-fixed rounded mb-6 group-hover:glow-cyan transition-all">
+<span class="material-symbols-outlined text-[32px]" data-icon="fact_check">fact_check</span>
+</div>
+<h3 class="font-headline-md text-headline-md text-primary mb-2">Testing</h3>
+<p class="text-on-surface-variant text-body-md">End-to-end reliability strategies from unit kernels to integration stress cycles.</p>
+<div class="mt-6 flex justify-end opacity-0 group-hover:opacity-100 transition-opacity">
+<span class="material-symbols-outlined text-primary-fixed" data-icon="arrow_forward">arrow_forward</span>
+</div>
+</div>
+<!-- Design Patterns -->
+<div class="glass-panel p-6 rounded-xl group hover:border-primary-fixed transition-all duration-300 relative overflow-hidden">
+<div class="absolute top-2 right-2 font-code-block text-[10px] text-primary/30">SN: 402-PAT</div>
+<div class="w-12 h-12 flex items-center justify-center bg-primary-container/10 border border-primary-container/20 text-primary-fixed rounded mb-6 group-hover:glow-cyan transition-all">
+<span class="material-symbols-outlined text-[32px]" data-icon="dashboard_customize">dashboard_customize</span>
+</div>
+<h3 class="font-headline-md text-headline-md text-primary mb-2">Design Patterns</h3>
+<p class="text-on-surface-variant text-body-md">Structural, creational, and behavioral blueprinting for reusable software components.</p>
+<div class="mt-6 flex justify-end opacity-0 group-hover:opacity-100 transition-opacity">
+<span class="material-symbols-outlined text-primary-fixed" data-icon="arrow_forward">arrow_forward</span>
+</div>
+</div>
+</div>
+</section>
+<!-- Recent Archives -->
+<section>
+<div class="flex items-center gap-4 mb-8">
+<span class="material-symbols-outlined text-primary-fixed" data-icon="history">history</span>
+<h2 class="font-headline-md text-headline-md text-primary">RECENT_ARCHIVES</h2>
+<div class="h-px flex-grow bg-gradient-to-r from-outline-variant/50 to-transparent"></div>
+</div>
+<div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
+<!-- Archive 1 -->
+<div class="glass-panel p-4 flex items-center gap-4 group cursor-pointer">
+<div class="w-16 h-16 bg-surface-container rounded border border-outline-variant/20 overflow-hidden flex-shrink-0">
+<img class="w-full h-full object-cover opacity-50 group-hover:opacity-80 transition-opacity" data-alt="Close-up high-contrast image of code syntax highlighted in vibrant cyan and magenta against a pitch black screen. The lighting is moody and focused, capturing the intricate details of a JavaScript function. The style is ultra-modern and technical, mirroring a high-end IDE. A slight bokeh effect blurs the background code lines." src="https://lh3.googleusercontent.com/aida-public/AB6AXuCoqVtyNwbn4DkjPbIPcIUw_t4t_baSxgo5RmxSp3tcJgzrHSS9f5aqgsGxvjMLNeJuISmUhy1juFrU91KO0hP2zZAaFJd0Xb0Bx15q85gHeZ02VjjxHyfk9ACLyLQc7royryr5mbhK4cq2SMLDDY2FTj8XFtzrCKPf9Are8ZJuTgG93gs3dkOloEpaLHhOnG1c0w-xOG50u9dAYBfrUmQg_RbwmijOBFPxPrOAYpYwzChWYuhkK8EsAqKluoMAmtlirj8Zsdxse_Z2"/>
+</div>
+<div class="flex-grow">
+<div class="text-[10px] font-nav-label text-primary-fixed mb-1">LANGUAGES / JS</div>
+<h4 class="font-headline-md text-[18px] text-primary group-hover:text-primary-fixed transition-colors">JavaScript: .map()</h4>
+<div class="flex items-center gap-2 mt-2">
+<span class="w-2 h-2 rounded-full bg-green-500 animate-pulse"></span>
+<span class="text-[10px] text-on-surface-variant uppercase tracking-widest">Completed</span>
+</div>
+</div>
+<span class="material-symbols-outlined text-on-surface-variant/40" data-icon="chevron_right">chevron_right</span>
+</div>
+<!-- Archive 2 -->
+<div class="glass-panel p-4 flex items-center gap-4 group cursor-pointer">
+<div class="w-16 h-16 bg-surface-container rounded border border-outline-variant/20 overflow-hidden flex-shrink-0">
+<img class="w-full h-full object-cover opacity-50 group-hover:opacity-80 transition-opacity" data-alt="Digital representation of server network nodes glowing with soft cyan light in a dark void. Symmetrical grid lines connect the nodes, illustrating a perfectly balanced data flow. The aesthetic is clean, minimalist, and deeply technical, evoking the feeling of a futuristic data center infrastructure. The atmosphere is quiet and efficient." src="https://lh3.googleusercontent.com/aida-public/AB6AXuCINdkO8Oscd_mJqdbEzKpVZTaEe4zy9otQvcVgRnOEjgkBbTp0neWi-XVaKMFzJZzskmnQ8cObW5jcjMhuFeSlZgj8us7Xqkg9NwnvS8upvBnVwy_iMzz4m5_Z9mBah19W6H7CDhGwr7LQxKZQRruJnmFuf2YkIHJ3wLUlJV71MMq1_wkVwj34ESOQjQqpD8syGbQZ6aIy5TmTWvx6YUmIV5Nok42FdHA7TyROcJUnEImlCEihnunIerbC4GbMxAfD5YyeucNDLfh5"/>
+</div>
+<div class="flex-grow">
+<div class="text-[10px] font-nav-label text-primary-fixed mb-1">SYSTEMS / INFRA</div>
+<h4 class="font-headline-md text-[18px] text-primary group-hover:text-primary-fixed transition-colors">Load Balancing</h4>
+<div class="flex items-center gap-2 mt-2">
+<span class="w-2 h-2 rounded-full bg-primary-fixed shadow-[0_0_8px_rgba(116,245,255,0.8)]"></span>
+<span class="text-[10px] text-on-surface-variant uppercase tracking-widest">In Progress</span>
+</div>
+</div>
+<span class="material-symbols-outlined text-on-surface-variant/40" data-icon="chevron_right">chevron_right</span>
+</div>
+<!-- Archive 3 -->
+<div class="glass-panel p-4 flex items-center gap-4 group cursor-pointer">
+<div class="w-16 h-16 bg-surface-container rounded border border-outline-variant/20 overflow-hidden flex-shrink-0">
+<img class="w-full h-full object-cover opacity-50 group-hover:opacity-80 transition-opacity" data-alt="Close-up of a high-resolution circuit board with glowing neon paths and microchips. The lighting highlights the geometric precision and metallic textures. A digital overlay of binary code floats subtly in the background. The visual style is highly sophisticated, dark-themed, and cinematic, representing the core foundation of software testing and reliability." src="https://lh3.googleusercontent.com/aida-public/AB6AXuALN6Burg0oTvbiDI8pZGQ-yV4Snf_JslgS1ysEm7gkTcZ2496NotD9Fi8tfEncMRoV0or7nN751FAEMzFoltqJ8oSjsm8JJKC64-EUcDfb3SGxQmD4R8XKXp50B3w6QDIXd7lddXWuw3pKnfSvjKmpVhmmRVN-84lJM_L7JqLYISKCZfUesKxZKRlMmLwXfqJ9EbWxgOhCwT6Py3fAtYP9nnn_-sVv5ru1kRkVEG6-_1bdnzlkvrHuIXW2j_s7cp7H0K_IVV-82V8-"/>
+</div>
+<div class="flex-grow">
+<div class="text-[10px] font-nav-label text-primary-fixed mb-1">TESTING / QA</div>
+<h4 class="font-headline-md text-[18px] text-primary group-hover:text-primary-fixed transition-colors">Unit Testing</h4>
+<div class="flex items-center gap-2 mt-2">
+<span class="w-2 h-2 rounded-full bg-surface-variant"></span>
+<span class="text-[10px] text-on-surface-variant uppercase tracking-widest">Not Started</span>
+</div>
+</div>
+<span class="material-symbols-outlined text-on-surface-variant/40" data-icon="chevron_right">chevron_right</span>
+</div>
+</div>
+</section>
+</div>
+<!-- Footer Decoration -->
+<footer class="mt-20 border-t border-outline-variant/10 py-8 px-margin-desktop text-on-surface-variant/30 flex justify-between items-center text-[10px] font-code-block">
+<div>© 2024 CYBERSPACE_NEXUS // ALL_RIGHTS_RESERVED</div>
+<div class="flex gap-6">
+<span class="hover:text-primary-fixed transition-colors cursor-pointer">v1.0.4_STABLE</span>
+<span class="hover:text-primary-fixed transition-colors cursor-pointer">ENCRYPTION: AES-256</span>
+<span class="hover:text-primary-fixed transition-colors cursor-pointer">PROTOCOL: HTTPS_SECURED</span>
+</div>
+</footer>
+</main>
+<!-- Floating Action Button (Only on Home) -->
+<button class="fixed bottom-gutter right-gutter w-14 h-14 bg-primary-container text-on-primary-fixed rounded-full shadow-lg flex items-center justify-center hover:scale-110 active:scale-95 transition-all z-50 group">
+<span class="material-symbols-outlined" data-icon="add_task">add_task</span>
+<span class="absolute right-16 bg-surface-container-high text-primary-fixed font-nav-label text-[10px] px-3 py-1 rounded border border-outline-variant opacity-0 group-hover:opacity-100 transition-opacity whitespace-nowrap">NEW_SESSION</span>
+</button>
+<script>
+        // Micro-interaction: Typewriter effect for terminal title
+        const textElement = document.getElementById('typewriter');
+        const text = textElement.innerText;
+        textElement.innerText = '';
+        let i = 0;
+
+        function typeWriter() {
+            if (i < text.length) {
+                textElement.innerHTML += text.charAt(i);
+                i++;
+                setTimeout(typeWriter, 50);
+            }
+        }
+
+        window.onload = typeWriter;
+
+        // Visual effect: Random grid pulse
+        setInterval(() => {
+            const opacity = Math.random() * 0.05 + 0.02;
+            document.body.style.backgroundImage = `
+                linear-gradient(rgba(0, 219, 231, ${opacity}) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(0, 219, 231, ${opacity}) 1px, transparent 1px)`;
+        }, 3000);
+    </script>
+</body></html>

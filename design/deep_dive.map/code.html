@@ -1,0 +1,370 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&amp;family=JetBrains+Mono:wght@400;500&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            "colors": {
+                    "surface-container-low": "#1a1b21",
+                    "surface-container-high": "#292a2f",
+                    "on-tertiary": "#003824",
+                    "background": "#121318",
+                    "surface-variant": "#34343a",
+                    "surface-container": "#1e1f25",
+                    "inverse-surface": "#e3e1e9",
+                    "secondary-container": "#6f00be",
+                    "surface-bright": "#38393f",
+                    "inverse-on-surface": "#2f3036",
+                    "primary-fixed": "#74f5ff",
+                    "secondary-fixed-dim": "#ddb7ff",
+                    "on-error": "#690005",
+                    "error": "#ffb4ab",
+                    "surface-container-lowest": "#0d0e13",
+                    "on-surface": "#e3e1e9",
+                    "on-secondary": "#490080",
+                    "on-secondary-fixed-variant": "#6900b3",
+                    "tertiary-container": "#67f4b7",
+                    "on-tertiary-fixed-variant": "#005236",
+                    "primary-container": "#00f2ff",
+                    "on-primary-fixed": "#002022",
+                    "on-primary": "#00363a",
+                    "primary": "#e1fdff",
+                    "on-tertiary-fixed": "#002113",
+                    "on-secondary-container": "#d6a9ff",
+                    "inverse-primary": "#00696f",
+                    "outline": "#849495",
+                    "tertiary-fixed-dim": "#4edea3",
+                    "secondary-fixed": "#f0dbff",
+                    "on-error-container": "#ffdad6",
+                    "secondary": "#ddb7ff",
+                    "surface-dim": "#121318",
+                    "error-container": "#93000a",
+                    "on-secondary-fixed": "#2c0051",
+                    "on-background": "#e3e1e9",
+                    "on-surface-variant": "#b9cacb",
+                    "primary-fixed-dim": "#00dbe7",
+                    "surface-tint": "#00dbe7",
+                    "surface": "#121318",
+                    "outline-variant": "#3a494b",
+                    "on-tertiary-container": "#006e4b",
+                    "tertiary": "#e1ffec",
+                    "tertiary-fixed": "#6ffbbe",
+                    "surface-container-highest": "#34343a",
+                    "on-primary-container": "#006a71",
+                    "on-primary-fixed-variant": "#004f54"
+            },
+            "borderRadius": {
+                    "DEFAULT": "0.125rem",
+                    "lg": "0.25rem",
+                    "xl": "0.5rem",
+                    "full": "0.75rem"
+            },
+            "spacing": {
+                    "base": "8px",
+                    "gutter": "24px",
+                    "margin-desktop": "64px",
+                    "margin-mobile": "16px",
+                    "container-max": "1200px"
+            },
+            "fontFamily": {
+                    "body-md": ["Inter"],
+                    "nav-label": ["JetBrains Mono"],
+                    "body-lg": ["Inter"],
+                    "headline-lg-mobile": ["Inter"],
+                    "code-block": ["JetBrains Mono"],
+                    "headline-lg": ["Inter"],
+                    "headline-md": ["Inter"],
+                    "headline-xl": ["Inter"]
+            },
+            "fontSize": {
+                    "body-md": ["16px", {"lineHeight": "24px", "fontWeight": "400"}],
+                    "nav-label": ["12px", {"lineHeight": "16px", "letterSpacing": "0.1em", "fontWeight": "500"}],
+                    "body-lg": ["18px", {"lineHeight": "28px", "fontWeight": "400"}],
+                    "headline-lg-mobile": ["28px", {"lineHeight": "36px", "fontWeight": "700"}],
+                    "code-block": ["14px", {"lineHeight": "20px", "fontWeight": "400"}],
+                    "headline-lg": ["32px", {"lineHeight": "40px", "letterSpacing": "-0.01em", "fontWeight": "700"}],
+                    "headline-md": ["24px", {"lineHeight": "32px", "fontWeight": "600"}],
+                    "headline-xl": ["48px", {"lineHeight": "56px", "letterSpacing": "-0.02em", "fontWeight": "800"}]
+            }
+          },
+        },
+      }
+    </script>
+<style>
+        body {
+            background-color: #121318;
+            background-image: 
+                linear-gradient(rgba(0, 219, 231, 0.03) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(0, 219, 231, 0.03) 1px, transparent 1px);
+            background-size: 32px 32px;
+            color: #e3e1e9;
+        }
+        .glass-panel {
+            background: rgba(30, 31, 37, 0.6);
+            backdrop-filter: blur(16px);
+            border: 1px solid rgba(132, 148, 149, 0.2);
+            position: relative;
+        }
+        .glass-panel::before {
+            content: "";
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 1px;
+            background: linear-gradient(90deg, #00dbe7 0%, transparent 100%);
+            opacity: 0.5;
+        }
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+        .active-glow {
+            box-shadow: 0 0 15px 2px rgba(0, 219, 231, 0.2);
+        }
+        .neon-purple { color: #ddb7ff; }
+        .neon-green { color: #4edea3; }
+        .neon-cyan { color: #00dbe7; }
+        
+        .nav-bracket-hover:hover .bracket { opacity: 1; }
+        .bracket { opacity: 0; transition: opacity 0.2s; font-family: 'JetBrains Mono', monospace; color: #00dbe7; }
+    </style>
+</head>
+<body class="font-body-md text-body-md overflow-x-hidden">
+<!-- TopNavBar -->
+<nav class="fixed top-0 w-full z-50 flex justify-between items-center px-margin-desktop h-16 bg-surface-container/60 backdrop-blur-xl border-b border-outline-variant/20">
+<div class="flex items-center gap-8">
+<span class="font-nav-label text-nav-label tracking-widest text-primary-container font-bold">CYBERSPACE_NEXUS_v1.0</span>
+<div class="hidden md:flex gap-6">
+<a class="text-on-surface-variant font-medium hover:text-primary-fixed-dim transition-colors duration-300 font-nav-label text-nav-label" href="#">DOMAINS</a>
+<a class="text-primary-fixed font-bold border-b border-primary-fixed font-nav-label text-nav-label" href="#">ARCHIVE</a>
+<a class="text-on-surface-variant font-medium hover:text-primary-fixed-dim transition-colors duration-300 font-nav-label text-nav-label" href="#">TERMINAL</a>
+</div>
+</div>
+<div class="flex items-center gap-4">
+<span class="material-symbols-outlined text-on-surface-variant cursor-pointer hover:text-primary-fixed transition-colors">settings</span>
+<span class="material-symbols-outlined text-on-surface-variant cursor-pointer hover:text-primary-fixed transition-colors">account_tree</span>
+<div class="w-8 h-8 rounded-full bg-surface-variant overflow-hidden border border-outline-variant">
+<img alt="Engineer Avatar" class="w-full h-full object-cover" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDRvlZ9cKPsCPa3Zd4BpeXDIAUlmPaqi-S6D9a_6SqM0q0c7ypDz5PS5FbZDpSoDNyakh-o92vpvWXzhZVROZcsqF7XJ_ZeLJxiyx4FivXO8qX5K6OF2yvzfj6dECYCRSiH2W6HbsH5BXJ1wC2rGIuq-6UUA650VJ7HXMvmRfn5NxehOFcfn-rFDF4aT-pCg9gtvls0VMdfGZfxpEAJT21G8nVwvtvVky_YAud6eykvU0S4wpOS4NXSSDP2cJzOxFJDDjB893E0ry-5"/>
+</div>
+</div>
+</nav>
+<!-- SideNavBar -->
+<aside class="fixed left-0 top-16 h-[calc(100vh-64px)] w-64 flex flex-col justify-between py-gutter z-40 bg-surface-container-lowest/80 backdrop-blur-2xl border-r border-outline-variant/20 hidden md:flex">
+<div class="flex flex-col gap-2">
+<div class="px-6 mb-8">
+<p class="font-code-block text-code-block text-primary">NODE_734</p>
+<p class="font-nav-label text-[10px] text-on-surface-variant opacity-60">Senior_Eng_Auth</p>
+</div>
+<a class="group flex items-center gap-3 text-on-surface-variant px-6 py-3 hover:bg-surface-variant/30 transition-all duration-200" href="#">
+<span class="material-symbols-outlined text-[20px]">hub</span>
+<span class="font-nav-label text-nav-label flex items-center gap-1">
+<span class="bracket">[</span>THE_NEXUS<span class="bracket">]</span>
+</span>
+</a>
+<a class="group flex items-center gap-3 text-primary-fixed font-bold bg-primary-container/10 border-r-2 border-primary-fixed px-6 py-3" href="#">
+<span class="material-symbols-outlined text-[20px]">code</span>
+<span class="font-nav-label text-nav-label">LANGUAGES</span>
+</a>
+<a class="group flex items-center gap-3 text-on-surface-variant px-6 py-3 hover:bg-surface-variant/30 transition-all duration-200" href="#">
+<span class="material-symbols-outlined text-[20px]">architecture</span>
+<span class="font-nav-label text-nav-label flex items-center gap-1">
+<span class="bracket">[</span>SYSTEMS<span class="bracket">]</span>
+</span>
+</a>
+<a class="group flex items-center gap-3 text-on-surface-variant px-6 py-3 hover:bg-surface-variant/30 transition-all duration-200" href="#">
+<span class="material-symbols-outlined text-[20px]">quiz</span>
+<span class="font-nav-label text-nav-label flex items-center gap-1">
+<span class="bracket">[</span>FLASHCARDS<span class="bracket">]</span>
+</span>
+</a>
+<a class="group flex items-center gap-3 text-on-surface-variant px-6 py-3 hover:bg-surface-variant/30 transition-all duration-200" href="#">
+<span class="material-symbols-outlined text-[20px]">terminal</span>
+<span class="font-nav-label text-nav-label flex items-center gap-1">
+<span class="bracket">[</span>SETTINGS<span class="bracket">]</span>
+</span>
+</a>
+</div>
+<div class="px-6 flex flex-col gap-4">
+<a class="flex items-center gap-3 text-on-surface-variant hover:text-primary-fixed transition-colors" href="#">
+<span class="material-symbols-outlined text-[18px]">description</span>
+<span class="font-nav-label text-[10px]">Documentation</span>
+</a>
+<a class="flex items-center gap-3 text-on-surface-variant hover:text-primary-fixed transition-colors" href="#">
+<span class="material-symbols-outlined text-[18px]">help_center</span>
+<span class="font-nav-label text-[10px]">Terminal_Help</span>
+</a>
+</div>
+</aside>
+<!-- Main Content Canvas -->
+<main class="md:ml-64 pt-24 pb-16 px-margin-mobile md:px-margin-desktop">
+<div class="max-w-container-max mx-auto">
+<!-- Hero Section -->
+<section class="mb-12 relative overflow-hidden">
+<div class="flex flex-col md:flex-row justify-between items-start md:items-end gap-6 mb-8">
+<div>
+<div class="flex items-center gap-2 text-primary-fixed-dim mb-2">
+<span class="material-symbols-outlined text-[16px]">integration_instructions</span>
+<span class="font-code-block text-[12px] tracking-widest uppercase">Method_Documentation_Unit</span>
+</div>
+<h1 class="font-headline-xl text-headline-xl text-primary leading-none">METHOD: Array.prototype.map()</h1>
+</div>
+<button class="bg-primary-container text-on-primary-fixed font-nav-label px-gutter py-3 rounded hover:bg-primary-fixed transition-all active:scale-95 flex items-center gap-2 active-glow">
+<span class="material-symbols-outlined">bolt</span>
+                        RUN_QUIZ_MODE
+                    </button>
+</div>
+<div class="h-px w-full bg-gradient-to-r from-primary-container to-transparent opacity-30"></div>
+</section>
+<div class="grid grid-cols-12 gap-gutter">
+<!-- Breakdown Section -->
+<div class="col-span-12 lg:col-span-5 flex flex-col gap-gutter">
+<div class="glass-panel p-gutter rounded-xl">
+<div class="flex justify-between items-start mb-4">
+<h3 class="font-headline-md text-headline-md text-primary-fixed">WHAT IT DOES</h3>
+<span class="font-code-block text-[10px] text-outline opacity-60">ID: 0xFF452</span>
+</div>
+<p class="text-on-surface-variant leading-relaxed mb-6">
+                            The <code class="font-code-block text-primary-fixed bg-surface-container-high px-1 rounded">map()</code> method creates a <strong class="text-on-surface">new array</strong> populated with the results of calling a provided function on every element in the calling array.
+                        </p>
+<div class="space-y-4">
+<div class="flex items-start gap-4 p-4 bg-surface-container-low rounded border border-outline-variant/10">
+<span class="material-symbols-outlined text-tertiary-fixed-dim">check_circle</span>
+<div>
+<h4 class="font-nav-label text-tertiary-fixed-dim">IMMUTABILITY</h4>
+<p class="text-[14px] text-on-surface-variant">Does not mutate the original array; returns a fresh instance.</p>
+</div>
+</div>
+<div class="flex items-start gap-4 p-4 bg-surface-container-low rounded border border-outline-variant/10">
+<span class="material-symbols-outlined text-primary-fixed-dim">transform</span>
+<div>
+<h4 class="font-nav-label text-primary-fixed-dim">ONE-TO-ONE</h4>
+<p class="text-[14px] text-on-surface-variant">Maintains the exact same length as the source array.</p>
+</div>
+</div>
+</div>
+</div>
+<div class="glass-panel p-gutter rounded-xl">
+<h3 class="font-nav-label text-on-surface mb-4">SYNTAX_BLOCK</h3>
+<div class="bg-black p-4 rounded border border-outline-variant/20 font-code-block text-code-block overflow-x-auto">
+<span class="neon-purple">const</span> <span class="neon-cyan">newArray</span> = arr.<span class="neon-green">map</span>((<span class="neon-cyan">element</span>, <span class="neon-cyan">index</span>, <span class="neon-cyan">array</span>) =&gt; { <br/>
+                              <span class="text-outline-variant">// return result for newArray</span><br/>
+                            });
+                        </div>
+</div>
+</div>
+<!-- Visual Transformation -->
+<div class="col-span-12 lg:col-span-7 flex flex-col gap-gutter">
+<div class="glass-panel p-gutter rounded-xl flex-grow flex flex-col">
+<div class="flex justify-between items-center mb-8">
+<h3 class="font-headline-md text-headline-md text-primary-fixed">VISUAL_TRANSFORMATION</h3>
+<div class="flex gap-2">
+<div class="w-2 h-2 rounded-full bg-primary-fixed-dim animate-pulse"></div>
+<div class="w-2 h-2 rounded-full bg-outline-variant"></div>
+<div class="w-2 h-2 rounded-full bg-outline-variant"></div>
+</div>
+</div>
+<div class="flex flex-col md:flex-row items-center justify-between gap-8 py-12 px-6 bg-surface-container-lowest/50 rounded-lg border border-outline-variant/10 relative">
+<!-- SVG Connection Line -->
+<div class="absolute inset-0 pointer-events-none hidden md:block">
+<svg class="w-full h-full">
+<line stroke="rgba(0, 219, 231, 0.2)" stroke-dasharray="4 4" x1="30%" x2="70%" y1="50%" y2="50%"></line>
+</svg>
+</div>
+<!-- Before -->
+<div class="flex flex-col items-center gap-4 z-10">
+<span class="font-nav-label text-[10px] text-outline uppercase tracking-widest">Input_Array</span>
+<div class="flex gap-2">
+<div class="w-16 h-16 flex items-center justify-center glass-panel border-outline-variant/40 rounded text-headline-md font-code-block">1</div>
+<div class="w-16 h-16 flex items-center justify-center glass-panel border-outline-variant/40 rounded text-headline-md font-code-block">2</div>
+<div class="w-16 h-16 flex items-center justify-center glass-panel border-outline-variant/40 rounded text-headline-md font-code-block">3</div>
+</div>
+</div>
+<!-- Callback -->
+<div class="flex flex-col items-center gap-2 z-10 bg-primary-container/10 p-4 rounded-full border border-primary-fixed/30 backdrop-blur">
+<span class="material-symbols-outlined text-primary-fixed">function</span>
+<code class="font-code-block text-[12px] text-primary-fixed">(x) =&gt; x * 2</code>
+</div>
+<!-- After -->
+<div class="flex flex-col items-center gap-4 z-10">
+<span class="font-nav-label text-[10px] text-outline uppercase tracking-widest">Output_Array</span>
+<div class="flex gap-2">
+<div class="w-16 h-16 flex items-center justify-center glass-panel border-primary-fixed/40 rounded text-headline-md font-code-block text-primary-fixed active-glow">2</div>
+<div class="w-16 h-16 flex items-center justify-center glass-panel border-primary-fixed/40 rounded text-headline-md font-code-block text-primary-fixed active-glow">4</div>
+<div class="w-16 h-16 flex items-center justify-center glass-panel border-primary-fixed/40 rounded text-headline-md font-code-block text-primary-fixed active-glow">6</div>
+</div>
+</div>
+</div>
+<!-- Terminal Area -->
+<div class="mt-gutter flex-grow flex flex-col">
+<div class="bg-surface-container-high px-4 py-2 rounded-t-lg border-x border-t border-outline-variant/20 flex justify-between items-center">
+<div class="flex gap-1.5">
+<div class="w-3 h-3 rounded-full bg-error/40"></div>
+<div class="w-3 h-3 rounded-full bg-tertiary-fixed-dim/40"></div>
+<div class="w-3 h-3 rounded-full bg-primary-fixed-dim/40"></div>
+</div>
+<span class="font-nav-label text-[10px] text-on-surface-variant">INTERACTIVE_DEBUGGER.sh</span>
+</div>
+<div class="bg-black p-6 rounded-b-lg border border-outline-variant/20 font-code-block text-code-block flex-grow shadow-2xl relative overflow-hidden">
+<div class="relative z-10">
+<p class="text-outline-variant mb-2">// Try modifying the logic below</p>
+<p><span class="neon-purple">const</span> users = [</p>
+<p>  { id: <span class="neon-cyan">1</span>, name: <span class="neon-green">'Alice'</span> },</p>
+<p>  { id: <span class="neon-cyan">2</span>, name: <span class="neon-green">'Bob'</span> }</p>
+<p>];</p>
+<p class="mt-4"><span class="neon-purple">const</span> names = users.<span class="neon-green">map</span>(u =&gt; u.name);</p>
+<p class="mt-4 text-outline-variant">&gt;</p>
+<div class="flex items-center gap-2">
+<span class="text-primary-fixed-dim">&gt;</span>
+<div class="w-2 h-5 bg-primary-fixed-dim animate-[pulse_1s_infinite]"></div>
+</div>
+</div>
+<!-- Tech Pattern BG -->
+<div class="absolute right-0 bottom-0 opacity-10 pointer-events-none">
+<span class="material-symbols-outlined text-[120px]" style="font-variation-settings: 'FILL' 1;">terminal</span>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+<!-- Knowledge Check / Bento Bottom -->
+<section class="mt-gutter grid grid-cols-1 md:grid-cols-3 gap-gutter">
+<div class="glass-panel p-gutter rounded-xl flex items-center justify-between group cursor-pointer hover:border-primary-fixed/40 transition-all">
+<div>
+<p class="font-nav-label text-[10px] text-outline mb-1">UNIT_01</p>
+<h4 class="font-headline-md text-headline-md text-on-surface">Time Complexity</h4>
+</div>
+<span class="font-code-block text-primary-fixed-dim text-headline-md">O(n)</span>
+</div>
+<div class="glass-panel p-gutter rounded-xl flex items-center justify-between group cursor-pointer hover:border-primary-fixed/40 transition-all">
+<div>
+<p class="font-nav-label text-[10px] text-outline mb-1">UNIT_02</p>
+<h4 class="font-headline-md text-headline-md text-on-surface">Return Type</h4>
+</div>
+<span class="font-code-block text-primary-fixed-dim text-headline-md">Array&lt;T&gt;</span>
+</div>
+<div class="glass-panel p-gutter rounded-xl flex items-center justify-between group cursor-pointer hover:border-primary-fixed/40 transition-all border-primary-fixed/30 active-glow">
+<div>
+<p class="font-nav-label text-[10px] text-outline mb-1">UNIT_03</p>
+<h4 class="font-headline-md text-headline-md text-on-surface">Edge Cases</h4>
+</div>
+<span class="material-symbols-outlined text-primary-fixed text-[32px]">warning</span>
+</div>
+</section>
+</div>
+</main>
+<script>
+        // Micro-interaction for terminal cursor or button pulse
+        document.addEventListener('DOMContentLoaded', () => {
+            console.log('NEXUS_SYSTEM: Navigation and Method Deep-Dive active.');
+        });
+    </script>
+</body></html>

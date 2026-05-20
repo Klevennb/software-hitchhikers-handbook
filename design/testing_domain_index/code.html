@@ -1,0 +1,424 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Testing_Domain: Index | CYBERSPACE_NEXUS</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&amp;family=JetBrains+Mono:wght@400;500;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    "colors": {
+                        "secondary-container": "#6f00be",
+                        "on-tertiary": "#003824",
+                        "on-surface-variant": "#b9cacb",
+                        "primary-fixed": "#74f5ff",
+                        "surface-container-low": "#1a1b21",
+                        "on-secondary-container": "#d6a9ff",
+                        "secondary-fixed-dim": "#ddb7ff",
+                        "outline": "#849495",
+                        "surface-dim": "#121318",
+                        "primary-container": "#00f2ff",
+                        "surface-container-highest": "#34343a",
+                        "surface": "#121318",
+                        "tertiary-fixed": "#6ffbbe",
+                        "surface-tint": "#00dbe7",
+                        "tertiary-container": "#67f4b7",
+                        "secondary-fixed": "#f0dbff",
+                        "secondary": "#ddb7ff",
+                        "on-background": "#e3e1e9",
+                        "on-primary-fixed": "#002022",
+                        "surface-variant": "#34343a",
+                        "error": "#ffb4ab",
+                        "on-secondary-fixed-variant": "#6900b3",
+                        "outline-variant": "#3a494b",
+                        "on-secondary": "#490080",
+                        "on-tertiary-fixed": "#002113",
+                        "surface-container": "#1e1f25",
+                        "inverse-surface": "#e3e1e9",
+                        "tertiary": "#e1ffec",
+                        "error-container": "#93000a",
+                        "inverse-primary": "#00696f",
+                        "tertiary-fixed-dim": "#4edea3",
+                        "on-primary-container": "#006a71",
+                        "on-primary": "#00363a",
+                        "surface-container-lowest": "#0d0e13",
+                        "inverse-on-surface": "#2f3036",
+                        "on-surface": "#e3e1e9",
+                        "on-primary-fixed-variant": "#004f54",
+                        "on-secondary-fixed": "#2c0051",
+                        "background": "#121318",
+                        "on-error-container": "#ffdad6",
+                        "on-error": "#690005",
+                        "surface-bright": "#38393f",
+                        "primary": "#e1fdff",
+                        "on-tertiary-container": "#006e4b",
+                        "on-tertiary-fixed-variant": "#005236",
+                        "primary-fixed-dim": "#00dbe7",
+                        "surface-container-high": "#292a2f"
+                    },
+                    "borderRadius": {
+                        "DEFAULT": "0.125rem",
+                        "lg": "0.25rem",
+                        "xl": "0.5rem",
+                        "full": "0.75rem"
+                    },
+                    "spacing": {
+                        "margin-mobile": "16px",
+                        "margin-desktop": "64px",
+                        "container-max": "1200px",
+                        "gutter": "24px",
+                        "base": "8px"
+                    },
+                    "fontFamily": {
+                        "body-md": ["Inter"],
+                        "body-lg": ["Inter"],
+                        "nav-label": ["JetBrains Mono"],
+                        "headline-lg": ["Inter"],
+                        "code-block": ["JetBrains Mono"],
+                        "headline-xl": ["Inter"],
+                        "headline-lg-mobile": ["Inter"],
+                        "headline-md": ["Inter"]
+                    },
+                    "fontSize": {
+                        "body-md": ["16px", {"lineHeight": "24px", "fontWeight": "400"}],
+                        "body-lg": ["18px", {"lineHeight": "28px", "fontWeight": "400"}],
+                        "nav-label": ["12px", {"lineHeight": "16px", "letterSpacing": "0.1em", "fontWeight": "500"}],
+                        "headline-lg": ["32px", {"lineHeight": "40px", "letterSpacing": "-0.01em", "fontWeight": "700"}],
+                        "code-block": ["14px", {"lineHeight": "20px", "fontWeight": "400"}],
+                        "headline-xl": ["48px", {"lineHeight": "56px", "letterSpacing": "-0.02em", "fontWeight": "800"}],
+                        "headline-lg-mobile": ["28px", {"lineHeight": "36px", "fontWeight": "700"}],
+                        "headline-md": ["24px", {"lineHeight": "32px", "fontWeight": "600"}]
+                    }
+                },
+            },
+        }
+    </script>
+<style>
+        body {
+            background-color: #0d0e13;
+            background-image: radial-gradient(circle at 2px 2px, rgba(116, 245, 255, 0.05) 1px, transparent 0);
+            background-size: 32px 32px;
+            color: #e3e1e9;
+        }
+        .glass-panel {
+            background: rgba(30, 31, 37, 0.6);
+            backdrop-filter: blur(12px);
+            border-top: 1px solid rgba(116, 245, 255, 0.2);
+            border-left: 1px solid rgba(116, 245, 255, 0.2);
+        }
+        .glow-cyan {
+            box-shadow: 0 0 15px rgba(0, 219, 231, 0.2);
+        }
+        .bracket-hover:hover .bracket {
+            opacity: 1;
+            transform: translateX(0);
+        }
+        .bracket {
+            opacity: 0;
+            transition: all 0.2s ease-in-out;
+        }
+        .circuit-line {
+            position: absolute;
+            background: rgba(0, 219, 231, 0.1);
+            z-index: -1;
+        }
+    </style>
+</head>
+<body class="font-body-md overflow-x-hidden">
+<!-- TopNavBar -->
+<header class="fixed top-0 w-full z-50 flex justify-between items-center px-margin-desktop h-16 bg-surface-container/60 backdrop-blur-xl border-b border-outline-variant/20">
+<div class="flex items-center gap-8">
+<span class="font-nav-label text-nav-label tracking-widest text-primary-container">CYBERSPACE_NEXUS_v1.0</span>
+<nav class="hidden md:flex gap-6">
+<a class="text-on-surface-variant font-medium hover:text-primary-fixed-dim transition-colors duration-300" href="#">DOMAINS</a>
+<a class="text-on-surface-variant font-medium hover:text-primary-fixed-dim transition-colors duration-300" href="#">ARCHIVE</a>
+<a class="text-primary-fixed font-bold border-b border-primary-fixed hover:text-primary-fixed-dim transition-colors duration-300" href="#">TERMINAL</a>
+</nav>
+</div>
+<div class="flex items-center gap-4">
+<div class="hidden lg:flex items-center bg-surface-container-highest/40 border border-outline-variant/30 px-3 py-1 rounded">
+<span class="material-symbols-outlined text-body-md text-on-surface-variant">search</span>
+<input class="bg-transparent border-none focus:ring-0 text-code-block font-code-block placeholder:text-outline-variant w-48" placeholder="SEARCH_SYSTEM..." type="text"/>
+</div>
+<span class="material-symbols-outlined text-primary-fixed-dim cursor-pointer hover:scale-110 transition-transform">settings</span>
+<span class="material-symbols-outlined text-primary-fixed-dim cursor-pointer hover:scale-110 transition-transform">account_tree</span>
+<div class="w-8 h-8 rounded-full border border-primary-fixed/30 overflow-hidden">
+<img alt="Engineer Avatar" class="w-full h-full object-cover" data-alt="A close-up portrait of a high-tech robotic engineer avatar with glowing cyan optic sensors and intricate metallic plating. The style is hyper-realistic technical concept art, featuring soft cinematic lighting with cool blue and deep charcoal tones to match a futuristic cyberpunk terminal aesthetic." src="https://lh3.googleusercontent.com/aida-public/AB6AXuCdFHSYTAGnPrsKlqKsKP33wSRKa34D3nlY5d5vY7Pi-4j-LASFiAETpX3aI7qrOKs4HtfFJlQKdIJgj5yBrjkXCDot7Tx0ThjcAX2J--M-6Yy3Zebq5ejMtMC02GjpkktePzWa6104gv6fDxBViytilPeV3Bu4NHSab-4rB1YYf99Q6xfJNCH9mZQoWXk1lo2wbeLLmR6b_Jojt__vBHf51UXDkLvLK-fqUmYfcdQbICXJ2OtXln9m2GD8D_BIkgpr_Sv00NrxCyeA"/>
+</div>
+</div>
+</header>
+<!-- SideNavBar -->
+<aside class="fixed left-0 top-16 h-[calc(100vh-64px)] w-64 flex flex-col justify-between py-gutter z-40 bg-surface-container-lowest/80 backdrop-blur-2xl border-r border-outline-variant/20">
+<div class="flex flex-col gap-2">
+<div class="px-6 mb-6 flex items-center gap-3">
+<div class="w-10 h-10 bg-primary-container/10 flex items-center justify-center border border-primary-fixed/20">
+<span class="material-symbols-outlined text-primary-fixed-dim" style="font-variation-settings: 'FILL' 1;">terminal</span>
+</div>
+<div>
+<div class="font-headline-md text-[14px] text-primary-fixed leading-tight">NODE_734</div>
+<div class="font-nav-label text-[10px] text-outline">Senior_Eng_Auth</div>
+</div>
+</div>
+<nav class="flex flex-col">
+<a class="group flex items-center gap-3 text-on-surface-variant p-base hover:bg-surface-variant/30 hover:text-primary-fixed transition-all duration-200" href="#">
+<span class="material-symbols-outlined ml-4">hub</span>
+<span class="font-nav-label flex items-center"><span class="bracket opacity-0 group-hover:opacity-100 transition-all mr-1">[</span>THE_NEXUS<span class="bracket opacity-0 group-hover:opacity-100 transition-all ml-1">]</span></span>
+</a>
+<a class="group flex items-center gap-3 text-on-surface-variant p-base hover:bg-surface-variant/30 hover:text-primary-fixed transition-all duration-200" href="#">
+<span class="material-symbols-outlined ml-4">code</span>
+<span class="font-nav-label flex items-center"><span class="bracket opacity-0 group-hover:opacity-100 transition-all mr-1">[</span>LANGUAGES<span class="bracket opacity-0 group-hover:opacity-100 transition-all ml-1">]</span></span>
+</a>
+<a class="group flex items-center gap-3 text-primary-fixed font-bold bg-primary-container/10 border-r-2 border-primary-fixed p-base" href="#">
+<span class="material-symbols-outlined ml-4" style="font-variation-settings: 'FILL' 1;">architecture</span>
+<span class="font-nav-label flex items-center">SYSTEMS</span>
+</a>
+<a class="group flex items-center gap-3 text-on-surface-variant p-base hover:bg-surface-variant/30 hover:text-primary-fixed transition-all duration-200" href="#">
+<span class="material-symbols-outlined ml-4">quiz</span>
+<span class="font-nav-label flex items-center"><span class="bracket opacity-0 group-hover:opacity-100 transition-all mr-1">[</span>FLASHCARDS<span class="bracket opacity-0 group-hover:opacity-100 transition-all ml-1">]</span></span>
+</a>
+<a class="group flex items-center gap-3 text-on-surface-variant p-base hover:bg-surface-variant/30 hover:text-primary-fixed transition-all duration-200" href="#">
+<span class="material-symbols-outlined ml-4">terminal</span>
+<span class="font-nav-label flex items-center"><span class="bracket opacity-0 group-hover:opacity-100 transition-all mr-1">[</span>SETTINGS<span class="bracket opacity-0 group-hover:opacity-100 transition-all ml-1">]</span></span>
+</a>
+</nav>
+</div>
+<div class="flex flex-col gap-1 border-t border-outline-variant/10 pt-4">
+<a class="flex items-center gap-3 text-on-surface-variant p-base hover:text-primary-fixed transition-colors" href="#">
+<span class="material-symbols-outlined ml-4 text-[18px]">description</span>
+<span class="font-nav-label text-[10px]">Documentation</span>
+</a>
+<a class="flex items-center gap-3 text-on-surface-variant p-base hover:text-primary-fixed transition-colors" href="#">
+<span class="material-symbols-outlined ml-4 text-[18px]">help_center</span>
+<span class="font-nav-label text-[10px]">Terminal_Help</span>
+</a>
+</div>
+</aside>
+<!-- Main Canvas -->
+<main class="ml-64 pt-24 px-margin-desktop pb-12 min-h-screen">
+<!-- Header Section -->
+<header class="mb-12 relative">
+<div class="circuit-line h-[1px] w-full top-1/2 -left-1/2"></div>
+<div class="flex flex-col gap-2">
+<span class="font-code-block text-primary-fixed-dim tracking-[0.2em] text-[12px]">SYSTEM_SEGMENT_04</span>
+<h1 class="font-headline-xl text-headline-xl text-primary-fixed uppercase tracking-tighter">Testing_Domain: Index</h1>
+<p class="font-body-lg text-on-surface-variant max-w-2xl">
+                    Ensuring system integrity through rigorous validation protocols. Code is fragile; verification is the lattice that sustains architecture.
+                </p>
+</div>
+<div class="absolute right-0 top-0 text-right opacity-30">
+<span class="font-code-block text-[10px] block">LATENCY: 12ms</span>
+<span class="font-code-block text-[10px] block">UPTIME: 99.998%</span>
+<span class="font-code-block text-[10px] block">THREAD_SECURE</span>
+</div>
+</header>
+<!-- Bento Grid: Main Content -->
+<div class="grid grid-cols-12 gap-gutter">
+<!-- Core_Tenets Section -->
+<section class="col-span-12 lg:col-span-8 flex flex-col gap-6">
+<div class="flex items-center gap-4">
+<h2 class="font-headline-md text-headline-md text-on-surface">Core_Tenets</h2>
+<div class="h-[1px] flex-grow bg-outline-variant/30"></div>
+</div>
+<div class="grid grid-cols-1 md:grid-cols-3 gap-base">
+<!-- Tenet Card: Reliability -->
+<div class="glass-panel p-6 relative group hover:glow-cyan transition-all duration-500">
+<div class="absolute top-2 right-2 font-code-block text-[10px] text-outline">SRN-001</div>
+<span class="material-symbols-outlined text-primary-container mb-4">verified_user</span>
+<h3 class="font-headline-md text-[18px] text-primary mb-2">Reliability</h3>
+<p class="font-body-md text-[14px] text-on-surface-variant">The consistent performance of code under predefined operational conditions without failure.</p>
+<div class="mt-4 pt-4 border-t border-outline-variant/20 flex justify-between items-center">
+<span class="font-code-block text-[10px] text-primary-fixed-dim">STATUS: OPTIMAL</span>
+<span class="material-symbols-outlined text-[16px] text-outline-variant group-hover:text-primary-fixed transition-colors">arrow_forward</span>
+</div>
+</div>
+<!-- Tenet Card: Maintainability -->
+<div class="glass-panel p-6 relative group hover:glow-cyan transition-all duration-500">
+<div class="absolute top-2 right-2 font-code-block text-[10px] text-outline">SRN-002</div>
+<span class="material-symbols-outlined text-primary-container mb-4">engineering</span>
+<h3 class="font-headline-md text-[18px] text-primary mb-2">Maintainability</h3>
+<p class="font-body-md text-[14px] text-on-surface-variant">The ease with which software can be modified to correct faults or improve performance.</p>
+<div class="mt-4 pt-4 border-t border-outline-variant/20 flex justify-between items-center">
+<span class="font-code-block text-[10px] text-primary-fixed-dim">STATUS: HIGH</span>
+<span class="material-symbols-outlined text-[16px] text-outline-variant group-hover:text-primary-fixed transition-colors">arrow_forward</span>
+</div>
+</div>
+<!-- Tenet Card: Regression -->
+<div class="glass-panel p-6 relative group hover:glow-cyan transition-all duration-500">
+<div class="absolute top-2 right-2 font-code-block text-[10px] text-outline">SRN-003</div>
+<span class="material-symbols-outlined text-primary-container mb-4">history</span>
+<h3 class="font-headline-md text-[18px] text-primary mb-2">Regression</h3>
+<p class="font-body-md text-[14px] text-on-surface-variant">Ensuring that recent changes have not adversely affected existing system features.</p>
+<div class="mt-4 pt-4 border-t border-outline-variant/20 flex justify-between items-center">
+<span class="font-code-block text-[10px] text-primary-fixed-dim">STATUS: PROTECTED</span>
+<span class="material-symbols-outlined text-[16px] text-outline-variant group-hover:text-primary-fixed transition-colors">arrow_forward</span>
+</div>
+</div>
+</div>
+</section>
+<!-- Testing_Pyramid (Asymmetric) -->
+<section class="col-span-12 lg:col-span-4 flex flex-col gap-6">
+<div class="flex items-center gap-4">
+<h2 class="font-headline-md text-headline-md text-on-surface">Testing_Pyramid</h2>
+<div class="h-[1px] flex-grow bg-outline-variant/30"></div>
+</div>
+<div class="glass-panel p-8 h-full flex flex-col justify-between border-primary-fixed/10">
+<div class="space-y-8">
+<!-- Pyramid Level: E2E -->
+<div class="flex items-center gap-4 group cursor-pointer">
+<div class="w-12 h-12 flex items-center justify-center border border-outline-variant/40 group-hover:border-primary-fixed transition-all">
+<span class="font-code-block text-[12px] text-outline group-hover:text-primary-fixed">01</span>
+</div>
+<div>
+<div class="font-nav-label text-primary-fixed-dim">E2E_PROTOCOLS</div>
+<div class="font-headline-md text-[20px] text-primary">UI_Integration</div>
+</div>
+</div>
+<!-- Pyramid Level: Integration -->
+<div class="flex items-center gap-4 group cursor-pointer opacity-70">
+<div class="w-12 h-12 flex items-center justify-center border border-outline-variant/40 group-hover:border-primary-fixed transition-all">
+<span class="font-code-block text-[12px] text-outline group-hover:text-primary-fixed">02</span>
+</div>
+<div>
+<div class="font-nav-label text-on-surface-variant">MODULE_LINKING</div>
+<div class="font-headline-md text-[20px] text-on-surface">API_Validation</div>
+</div>
+</div>
+<!-- Pyramid Level: Unit -->
+<div class="flex items-center gap-4 group cursor-pointer opacity-50">
+<div class="w-12 h-12 flex items-center justify-center border border-outline-variant/40 group-hover:border-primary-fixed transition-all">
+<span class="font-code-block text-[12px] text-outline group-hover:text-primary-fixed">03</span>
+</div>
+<div>
+<div class="font-nav-label text-on-surface-variant">ATOMIC_LOGIC</div>
+<div class="font-headline-md text-[20px] text-on-surface">Unit_Calculations</div>
+</div>
+</div>
+</div>
+<div class="mt-12 flex flex-col items-center">
+<!-- Abstract Visual Pyramid -->
+<div class="w-32 h-32 flex flex-col items-center gap-1">
+<div class="w-8 h-2 bg-primary-fixed shadow-[0_0_10px_rgba(116,245,255,0.5)]"></div>
+<div class="w-16 h-2 bg-primary-fixed/60"></div>
+<div class="w-24 h-2 bg-primary-fixed/30"></div>
+<div class="w-32 h-2 bg-primary-fixed/10"></div>
+</div>
+<span class="font-code-block text-[10px] text-outline mt-4">DISTRIBUTION_MAP_ACTIVE</span>
+</div>
+</div>
+</section>
+<!-- Testing_Tools (Dynamic Blocks) -->
+<section class="col-span-12 flex flex-col gap-6">
+<div class="flex items-center gap-4">
+<h2 class="font-headline-md text-headline-md text-on-surface">Testing_Tools</h2>
+<div class="h-[1px] flex-grow bg-outline-variant/30"></div>
+</div>
+<div class="grid grid-cols-1 md:grid-cols-3 gap-gutter">
+<!-- Tool: Jest -->
+<div class="bg-black/40 border border-outline-variant/20 rounded-lg overflow-hidden group">
+<div class="p-6 flex justify-between items-start">
+<div class="bg-[#15C213]/10 text-[#15C213] px-2 py-1 font-code-block text-[10px] rounded">FAST_EXECUTION</div>
+<img alt="Jest Logo" class="w-8 h-8 opacity-60 group-hover:opacity-100 transition-opacity" data-alt="The Jest testing framework logo rendered as a luminous neon icon against a dark, tech-oriented backdrop. The lighting is focused and clean, emphasizing a professional software development environment with high-contrast cyan and deep black tones." src="https://lh3.googleusercontent.com/aida-public/AB6AXuAaGUXjrXsK7_h1ogRdUlCF3zXzFPAdHNfdkZ8OBZ8VS-jOAnWthfGevyItTyX0eKXR3x-qCveXLMa-qZKXrUOudJGKtcCf1lNDWAKFaibf5UmD4UxxK0Lq5LV_ikLgBpXoKGC4xe4B_5C-D08mlN157imYmAWmEJhSRzNRY4OsDCWKvsuJUh8uwVewCHosWQ_Z6hm1vq6LbhywFUh-zo1ycI6M-8Oth2nPfbXCSPoDMB2QvhJxWVqVgmCsv1Xjtk9U36kndZ3bQtZE"/>
+</div>
+<div class="px-6 pb-2">
+<h4 class="font-headline-md text-[20px] text-on-surface">Jest</h4>
+<p class="font-body-md text-[14px] text-on-surface-variant mb-4">Delightful JavaScript Testing with a focus on simplicity.</p>
+</div>
+<div class="bg-black p-4 font-code-block text-[12px] text-primary-fixed-dim/70">
+<code>expect(nexus).toBe('stable');</code>
+</div>
+</div>
+<!-- Tool: Cypress -->
+<div class="bg-black/40 border border-outline-variant/20 rounded-lg overflow-hidden group">
+<div class="p-6 flex justify-between items-start">
+<div class="bg-primary-container/10 text-primary-container px-2 py-1 font-code-block text-[10px] rounded">REAL_TIME_BROWSER</div>
+<img alt="Cypress Logo" class="w-8 h-8 opacity-60 group-hover:opacity-100 transition-opacity" data-alt="The Cypress testing logo depicted as a vibrant, glowing digital insignia. It is showcased within a minimalist technical interface featuring blueprint grid lines and a dark midnight blue background, embodying a high-performance developer tool aesthetic." src="https://lh3.googleusercontent.com/aida-public/AB6AXuC1Ua7mRWzA19baHJc37aOGN6OBaGv76RQ378a_WjHGZt9yY9aIZ0WZBr_jw4pnluSG3JmNre_OYTFAXhJQKBqKoMV-Mr_ebLnfHzUTdg68k0e6wsRnGSHiFBqlLJIyMfSG8OdGWaiIIvw4Y36YRkxmR194Ot9TZAyn61yh3yUacjgm4FCnedA4Nq8WhkcMcqFkMQjHHAt9KJ-cb517CKOuWCh6YrJeIhx1pUfvqmggwU5r4U4aC0-8pLuikHl43s1fidRhIPm_bgws"/>
+</div>
+<div class="px-6 pb-2">
+<h4 class="font-headline-md text-[20px] text-on-surface">Cypress</h4>
+<p class="font-body-md text-[14px] text-on-surface-variant mb-4">Fast, easy and reliable testing for anything that runs in a browser.</p>
+</div>
+<div class="bg-black p-4 font-code-block text-[12px] text-primary-fixed-dim/70">
+<code>cy.visit('/nexus-core');</code>
+</div>
+</div>
+<!-- Tool: Playwright -->
+<div class="bg-black/40 border border-outline-variant/20 rounded-lg overflow-hidden group">
+<div class="p-6 flex justify-between items-start">
+<div class="bg-secondary/10 text-secondary px-2 py-1 font-code-block text-[10px] rounded">CROSS_PLATFORM</div>
+<img alt="Playwright Logo" class="w-8 h-8 opacity-60 group-hover:opacity-100 transition-opacity" data-alt="The Microsoft Playwright logo illustrated as a futuristic tech asset with glowing neon edges. The scene is set in a dark digital space with subtle bokeh effects and thin cyan circuitry lines, evoking a sense of cross-platform power and modern engineering precision." src="https://lh3.googleusercontent.com/aida-public/AB6AXuCSkAezNcDzpzwIiz8TQL5KCYgNVdUA_2HUzjYvSXJBGMi0Tem_t7jqXPpHzvPuREpDGAqA9RJns3DnuMQVH3juMCY6MPkzy0LS8lVM754mn0pTipajvimjpSkEfpAiDKxld7ukTS0SrAaO9rB3If8TmYBKn9i51aqHNptR09s79VvnmOzgKHhcL4FiV6AXrGEmI94-6DaJ_XqcEI9eZT3tHKg_jOcwdO1wLkShnE2FV3ZhbNc27RxFWrOnL6gRVcQO4_sDNu15ckAC"/>
+</div>
+<div class="px-6 pb-2">
+<h4 class="font-headline-md text-[20px] text-on-surface">Playwright</h4>
+<p class="font-body-md text-[14px] text-on-surface-variant mb-4">Reliable end-to-end testing for modern web apps.</p>
+</div>
+<div class="bg-black p-4 font-code-block text-[12px] text-primary-fixed-dim/70">
+<code>await page.goto('nexus://main');</code>
+</div>
+</div>
+</div>
+</section>
+</div>
+<!-- Terminal Output Component -->
+<section class="mt-12">
+<div class="bg-surface-container-low border border-primary-fixed/20 rounded shadow-2xl">
+<div class="flex items-center justify-between px-4 py-2 border-b border-outline-variant/20">
+<div class="flex gap-2">
+<div class="w-2 h-2 rounded-full bg-error"></div>
+<div class="w-2 h-2 rounded-full bg-[#FFD43B]"></div>
+<div class="w-2 h-2 rounded-full bg-[#15C213]"></div>
+</div>
+<span class="font-code-block text-[10px] text-outline">root@cyberspace:~/testing_domain/logs</span>
+<span class="material-symbols-outlined text-outline text-[16px]">terminal</span>
+</div>
+<div class="p-6 font-code-block text-[13px] leading-relaxed text-primary-fixed-dim/80 h-48 overflow-y-auto" id="terminal-output">
+<div>[SYSTEM] Initiating Validation Sequence...</div>
+<div class="text-[#15C213]">[PASS] Reliability_Test: OK</div>
+<div class="text-[#15C213]">[PASS] Maintainability_Check: OK</div>
+<div class="text-[#15C213]">[PASS] Regression_Analysis: NO_ERRORS</div>
+<div class="animate-pulse">_</div>
+</div>
+</div>
+</section>
+</main>
+<script>
+        // Micro-interaction for Terminal
+        const logs = [
+            "[INFO] Fetching latest Jest configurations...",
+            "[INFO] Synchronizing Playwright browser targets...",
+            "[WARN] Minor drift detected in Integration Layer...",
+            "[SYSTEM] Auto-correcting architectural alignment...",
+            "[PASS] E2E_UI_Suite: 124 tests passed.",
+            "[INFO] Re-indexing Cyberspace Testing Domain...",
+            "[SUCCESS] System state: STABLE."
+        ];
+        let logIndex = 0;
+        const terminalOutput = document.getElementById('terminal-output');
+        
+        setInterval(() => {
+            const line = document.createElement('div');
+            line.textContent = logs[logIndex % logs.length];
+            if (line.textContent.includes('[PASS]') || line.textContent.includes('[SUCCESS]')) {
+                line.style.color = '#15C213';
+            } else if (line.textContent.includes('[WARN]')) {
+                line.style.color = '#FFD43B';
+            }
+            terminalOutput.appendChild(line);
+            terminalOutput.scrollTop = terminalOutput.scrollHeight;
+            logIndex++;
+        }, 3000);
+
+        // Hover scale interaction
+        document.querySelectorAll('.glass-panel').forEach(panel => {
+            panel.addEventListener('mousedown', () => {
+                panel.classList.add('scale-95');
+                setTimeout(() => panel.classList.remove('scale-95'), 150);
+            });
+        });
+    </script>
+</body></html>

@@ -1,0 +1,248 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model UserProfile {
+  id        String   @id @default(cuid())
+  clerkId   String   @unique
+  email     String?
+  name      String?
+  imageUrl  String?
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  progress     UserProgress[]
+  savedTopics  SavedTopic[]
+  quizAttempts QuizAttempt[]
+}
+
+model Language {
+  id          String   @id @default(cuid())
+  slug        String   @unique
+  name        String
+  description String?
+  icon        String?
+  sortOrder   Int      @default(0)
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+
+  concepts Concept[]
+}
+
+model Topic {
+  id          String     @id @default(cuid())
+  slug        String     @unique
+  title       String
+  description String?
+  type        TopicType
+  difficulty  Difficulty
+  category    String
+  icon        String?
+  sortOrder   Int        @default(0)
+  createdAt   DateTime   @default(now())
+  updatedAt   DateTime   @updatedAt
+
+  concepts     Concept[]
+  savedByUsers SavedTopic[]
+}
+
+model Concept {
+  id          String        @id @default(cuid())
+  slug        String        @unique
+  title       String
+  subtitle    String?
+  summary     String
+  difficulty  Difficulty
+  type        ConceptType
+  status      ContentStatus @default(PUBLISHED)
+  languageId  String?
+  topicId     String
+  sortOrder   Int           @default(0)
+  createdAt   DateTime      @default(now())
+  updatedAt   DateTime      @updatedAt
+
+  language Language? @relation(fields: [languageId], references: [id])
+  topic    Topic     @relation(fields: [topicId], references: [id])
+
+  sections      ConceptSection[]
+  codeExamples  CodeExample[]
+  flashcards    Flashcard[]
+  quizQuestions QuizQuestion[]
+  progress      UserProgress[]
+  relatedFrom   ConceptRelation[] @relation("RelatedFrom")
+  relatedTo     ConceptRelation[] @relation("RelatedTo")
+}
+
+model ConceptSection {
+  id        String      @id @default(cuid())
+  conceptId String
+  type      SectionType
+  title     String
+  body      Json
+  sortOrder Int         @default(0)
+
+  concept Concept @relation(fields: [conceptId], references: [id], onDelete: Cascade)
+}
+
+model CodeExample {
+  id          String  @id @default(cuid())
+  conceptId   String
+  title       String
+  description String?
+  language    String
+  code        String
+  output      String?
+  sortOrder   Int     @default(0)
+
+  concept Concept @relation(fields: [conceptId], references: [id], onDelete: Cascade)
+}
+
+model Flashcard {
+  id          String     @id @default(cuid())
+  conceptId   String
+  front       String
+  back        String
+  explanation String?
+  difficulty  Difficulty @default(BEGINNER)
+  sortOrder   Int        @default(0)
+
+  concept Concept @relation(fields: [conceptId], references: [id], onDelete: Cascade)
+}
+
+model QuizQuestion {
+  id          String       @id @default(cuid())
+  conceptId   String
+  prompt      String
+  type        QuestionType
+  explanation String?
+  difficulty  Difficulty   @default(BEGINNER)
+  sortOrder   Int          @default(0)
+
+  concept Concept      @relation(fields: [conceptId], references: [id], onDelete: Cascade)
+  answers QuizAnswer[]
+}
+
+model QuizAnswer {
+  id         String  @id @default(cuid())
+  questionId String
+  body       String
+  isCorrect  Boolean @default(false)
+  sortOrder  Int     @default(0)
+
+  question QuizQuestion @relation(fields: [questionId], references: [id], onDelete: Cascade)
+}
+
+model UserProgress {
+  id             String         @id @default(cuid())
+  userId         String
+  conceptId      String
+  status         ProgressStatus @default(NOT_STARTED)
+  flashcardScore Int?
+  quizBestScore  Int?
+  lastStudiedAt  DateTime?
+  completedAt    DateTime?
+  createdAt      DateTime       @default(now())
+  updatedAt      DateTime       @updatedAt
+
+  user    UserProfile @relation(fields: [userId], references: [id], onDelete: Cascade)
+  concept Concept     @relation(fields: [conceptId], references: [id], onDelete: Cascade)
+
+  @@unique([userId, conceptId])
+}
+
+model SavedTopic {
+  id        String   @id @default(cuid())
+  userId    String
+  topicId   String
+  createdAt DateTime @default(now())
+
+  user  UserProfile @relation(fields: [userId], references: [id], onDelete: Cascade)
+  topic Topic       @relation(fields: [topicId], references: [id], onDelete: Cascade)
+
+  @@unique([userId, topicId])
+}
+
+model QuizAttempt {
+  id             String   @id @default(cuid())
+  userId         String
+  conceptId      String?
+  topicId        String?
+  score          Int
+  totalQuestions Int
+  answers        Json
+  createdAt      DateTime @default(now())
+
+  user UserProfile @relation(fields: [userId], references: [id], onDelete: Cascade)
+}
+
+model ConceptRelation {
+  id            String @id @default(cuid())
+  fromConceptId String
+  toConceptId   String
+  label         String?
+
+  fromConcept Concept @relation("RelatedFrom", fields: [fromConceptId], references: [id], onDelete: Cascade)
+  toConcept   Concept @relation("RelatedTo", fields: [toConceptId], references: [id], onDelete: Cascade)
+
+  @@unique([fromConceptId, toConceptId])
+}
+
+enum TopicType {
+  LANGUAGE
+  TESTING
+  DESIGN_PATTERN
+  AGENTIC_CODING
+  SYSTEM_DESIGN
+  GENERAL
+}
+
+enum ConceptType {
+  METHOD
+  FUNCTION
+  PATTERN
+  PRINCIPLE
+  TOOL
+  WORKFLOW
+  STRATEGY
+}
+
+enum Difficulty {
+  BEGINNER
+  INTERMEDIATE
+  ADVANCED
+}
+
+enum SectionType {
+  SUMMARY
+  MENTAL_MODEL
+  SYNTAX
+  PRACTICAL_EXAMPLES
+  COMMON_MISTAKES
+  WHEN_TO_USE
+  WHEN_NOT_TO_USE
+  VISUAL_TRANSFORM
+  RELATED
+  CUSTOM
+}
+
+enum QuestionType {
+  MULTIPLE_CHOICE
+  SHORT_ANSWER
+}
+
+enum ProgressStatus {
+  NOT_STARTED
+  IN_PROGRESS
+  COMPLETED
+}
+
+enum ContentStatus {
+  DRAFT
+  PUBLISHED
+  ARCHIVED
+}

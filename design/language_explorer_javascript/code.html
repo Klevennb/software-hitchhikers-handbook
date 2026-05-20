@@ -1,0 +1,430 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>CYBERSPACE_NEXUS | JAVASCRIPT_EXPLORER</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&amp;family=JetBrains+Mono:wght@400;500;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<style>
+        :root {
+            --cyan-glow: rgba(0, 219, 231, 0.3);
+            --cyan-border: rgba(0, 219, 231, 0.2);
+        }
+        body {
+            background-color: #121318;
+            background-image: 
+                linear-gradient(rgba(0, 219, 231, 0.03) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(0, 219, 231, 0.03) 1px, transparent 1px);
+            background-size: 32px 32px;
+            color: #e3e1e9;
+        }
+        .glass-card {
+            background: rgba(30, 31, 37, 0.6);
+            backdrop-filter: blur(16px);
+            border: 1px solid var(--cyan-border);
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+        .glass-card:hover {
+            border-color: #00dbe7;
+            box-shadow: 0 0 20px var(--cyan-glow);
+            transform: translateY(-2px);
+        }
+        .method-tag {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 10px;
+            letter-spacing: 0.05em;
+            padding: 2px 8px;
+            border: 1px solid rgba(185, 202, 203, 0.3);
+        }
+        .glow-text-cyan {
+            text-shadow: 0 0 10px rgba(0, 219, 231, 0.5);
+        }
+        .custom-scrollbar::-webkit-scrollbar {
+            width: 4px;
+        }
+        .custom-scrollbar::-webkit-scrollbar-track {
+            background: rgba(0, 0, 0, 0.1);
+        }
+        .custom-scrollbar::-webkit-scrollbar-thumb {
+            background: #3a494b;
+            border-radius: 10px;
+        }
+        .custom-scrollbar::-webkit-scrollbar-thumb:hover {
+            background: #00dbe7;
+        }
+    </style>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    "colors": {
+                        "surface-container-low": "#1a1b21",
+                        "surface-container-high": "#292a2f",
+                        "on-tertiary": "#003824",
+                        "background": "#121318",
+                        "surface-variant": "#34343a",
+                        "surface-container": "#1e1f25",
+                        "inverse-surface": "#e3e1e9",
+                        "secondary-container": "#6f00be",
+                        "surface-bright": "#38393f",
+                        "inverse-on-surface": "#2f3036",
+                        "primary-fixed": "#74f5ff",
+                        "secondary-fixed-dim": "#ddb7ff",
+                        "on-error": "#690005",
+                        "error": "#ffb4ab",
+                        "surface-container-lowest": "#0d0e13",
+                        "on-surface": "#e3e1e9",
+                        "on-secondary": "#490080",
+                        "on-secondary-fixed-variant": "#6900b3",
+                        "tertiary-container": "#67f4b7",
+                        "on-tertiary-fixed-variant": "#005236",
+                        "primary-container": "#00f2ff",
+                        "on-primary-fixed": "#002022",
+                        "on-primary": "#00363a",
+                        "primary": "#e1fdff",
+                        "on-tertiary-fixed": "#002113",
+                        "on-secondary-container": "#d6a9ff",
+                        "inverse-primary": "#00696f",
+                        "outline": "#849495",
+                        "tertiary-fixed-dim": "#4edea3",
+                        "secondary-fixed": "#f0dbff",
+                        "on-error-container": "#ffdad6",
+                        "secondary": "#ddb7ff",
+                        "surface-dim": "#121318",
+                        "error-container": "#93000a",
+                        "on-secondary-fixed": "#2c0051",
+                        "on-background": "#e3e1e9",
+                        "on-surface-variant": "#b9cacb",
+                        "primary-fixed-dim": "#00dbe7",
+                        "surface-tint": "#00dbe7",
+                        "surface": "#121318",
+                        "outline-variant": "#3a494b",
+                        "on-tertiary-container": "#006e4b",
+                        "tertiary": "#e1ffec",
+                        "tertiary-fixed": "#6ffbbe",
+                        "surface-container-highest": "#34343a",
+                        "on-primary-container": "#006a71",
+                        "on-primary-fixed-variant": "#004f54"
+                    },
+                    "borderRadius": {
+                        "DEFAULT": "0.125rem",
+                        "lg": "0.25rem",
+                        "xl": "0.5rem",
+                        "full": "0.75rem"
+                    },
+                    "spacing": {
+                        "base": "8px",
+                        "gutter": "24px",
+                        "margin-desktop": "64px",
+                        "margin-mobile": "16px",
+                        "container-max": "1200px"
+                    },
+                    "fontFamily": {
+                        "body-md": ["Inter"],
+                        "nav-label": ["JetBrains Mono"],
+                        "body-lg": ["Inter"],
+                        "headline-lg-mobile": ["Inter"],
+                        "code-block": ["JetBrains Mono"],
+                        "headline-lg": ["Inter"],
+                        "headline-md": ["Inter"],
+                        "headline-xl": ["Inter"]
+                    },
+                    "fontSize": {
+                        "body-md": ["16px", {"lineHeight": "24px", "fontWeight": "400"}],
+                        "nav-label": ["12px", {"lineHeight": "16px", "letterSpacing": "0.1em", "fontWeight": "500"}],
+                        "body-lg": ["18px", {"lineHeight": "28px", "fontWeight": "400"}],
+                        "headline-lg-mobile": ["28px", {"lineHeight": "36px", "fontWeight": "700"}],
+                        "code-block": ["14px", {"lineHeight": "20px", "fontWeight": "400"}],
+                        "headline-lg": ["32px", {"lineHeight": "40px", "letterSpacing": "-0.01em", "fontWeight": "700"}],
+                        "headline-md": ["24px", {"lineHeight": "32px", "fontWeight": "600"}],
+                        "headline-xl": ["48px", {"lineHeight": "56px", "letterSpacing": "-0.02em", "fontWeight": "800"}]
+                    }
+                }
+            }
+        }
+    </script>
+</head>
+<body class="flex min-h-screen">
+<!-- Top Navigation Bar -->
+<header class="fixed top-0 w-full z-50 flex justify-between items-center px-margin-desktop h-16 bg-surface-container/60 backdrop-blur-xl border-b border-outline-variant/20">
+<div class="flex items-center gap-gutter">
+<span class="font-nav-label text-nav-label tracking-widest text-primary-container">CYBERSPACE_NEXUS_v1.0</span>
+<nav class="hidden md:flex gap-gutter">
+<a class="text-on-surface-variant font-medium hover:text-primary-fixed-dim transition-colors duration-300 font-nav-label text-[10px]" href="#">DOMAINS</a>
+<a class="text-on-surface-variant font-medium hover:text-primary-fixed-dim transition-colors duration-300 font-nav-label text-[10px]" href="#">ARCHIVE</a>
+<a class="text-on-surface-variant font-medium hover:text-primary-fixed-dim transition-colors duration-300 font-nav-label text-[10px]" href="#">TERMINAL</a>
+</nav>
+</div>
+<div class="flex items-center gap-gutter">
+<div class="relative group hidden md:block">
+<span class="material-symbols-outlined absolute left-3 top-1/2 -translate-y-1/2 text-on-surface-variant text-sm" data-icon="search">search</span>
+<input class="bg-surface-container-highest/50 border-b border-outline-variant/40 focus:border-primary-fixed-dim focus:ring-0 text-body-md font-code-block text-[12px] pl-10 pr-4 py-1 transition-all duration-300 w-64 outline-none" placeholder="QUERY_METHODS..." type="text"/>
+</div>
+<div class="flex items-center gap-4">
+<span class="material-symbols-outlined text-on-surface-variant cursor-pointer hover:text-primary-fixed-dim transition-colors" data-icon="settings">settings</span>
+<span class="material-symbols-outlined text-on-surface-variant cursor-pointer hover:text-primary-fixed-dim transition-colors" data-icon="account_tree">account_tree</span>
+<div class="w-8 h-8 rounded-full border border-primary-fixed-dim/30 overflow-hidden">
+<img alt="Engineer Avatar" class="w-full h-full object-cover" data-alt="A futuristic portrait of a system engineer wearing high-tech head-up display goggles. The character has a sharp, focused expression, illuminated by the glowing blue interfaces of a command center. The lighting is moody and cinematic, dominated by deep blues and cyans with crisp, technical highlights. Digital data streams blur in the background." src="https://lh3.googleusercontent.com/aida-public/AB6AXuCRuSATeKr1DO320h_AR3A39JXgLXr7fTrgeaM8laSnI7s_1QQ8g4QmFFTaiT0K6jFhL3OzJlIzvREcGdQcT2R0GgnAsWfxTM0ktMMPhhY76ir1zRBJ17oItbRSsSIdWefXrENNBstH-wXMsnLC4Q_cQUj8GsFoJcjHz5JvDPTi4dTSlb8reB8gw45n6Pjf_bTvAT0pVvlpbPi1Jdmb1mCVKN33W8PKuzgFIqySN0p2pt8wv9Y2ysp44BSezo61OKQuIQjhIrI-AjgA"/>
+</div>
+</div>
+</div>
+</header>
+<!-- Side Navigation Bar -->
+<aside class="fixed left-0 top-16 h-[calc(100vh-64px)] w-64 flex flex-col justify-between py-gutter z-40 bg-surface-container-lowest/80 backdrop-blur-2xl border-r border-outline-variant/20 hidden md:flex">
+<div class="flex flex-col gap-1 px-4">
+<div class="flex flex-col mb-8 px-4">
+<span class="font-code-block text-code-block text-primary uppercase">NODE_734</span>
+<span class="font-nav-label text-[10px] text-on-surface-variant/60">Senior_Eng_Auth</span>
+</div>
+<a class="flex items-center gap-3 text-on-surface-variant p-base hover:text-primary-fixed transition-all duration-200 group" href="#">
+<span class="material-symbols-outlined text-[20px]" data-icon="hub">hub</span>
+<span class="font-nav-label text-nav-label group-hover:before:content-['['] group-hover:after:content-[']']">THE_NEXUS</span>
+</a>
+<a class="flex items-center gap-3 text-primary-fixed font-bold bg-primary-container/10 border-r-2 border-primary-fixed p-base group" href="#">
+<span class="material-symbols-outlined text-[20px]" data-icon="code">code</span>
+<span class="font-nav-label text-nav-label">LANGUAGES</span>
+</a>
+<a class="flex items-center gap-3 text-on-surface-variant p-base hover:text-primary-fixed transition-all duration-200 group" href="#">
+<span class="material-symbols-outlined text-[20px]" data-icon="architecture">architecture</span>
+<span class="font-nav-label text-nav-label group-hover:before:content-['['] group-hover:after:content-[']']">SYSTEMS</span>
+</a>
+<a class="flex items-center gap-3 text-on-surface-variant p-base hover:text-primary-fixed transition-all duration-200 group" href="#">
+<span class="material-symbols-outlined text-[20px]" data-icon="quiz">quiz</span>
+<span class="font-nav-label text-nav-label group-hover:before:content-['['] group-hover:after:content-[']']">FLASHCARDS</span>
+</a>
+<a class="flex items-center gap-3 text-on-surface-variant p-base hover:text-primary-fixed transition-all duration-200 group" href="#">
+<span class="material-symbols-outlined text-[20px]" data-icon="terminal">terminal</span>
+<span class="font-nav-label text-nav-label group-hover:before:content-['['] group-hover:after:content-[']']">SETTINGS</span>
+</a>
+</div>
+<div class="px-4 flex flex-col gap-1">
+<a class="flex items-center gap-3 text-on-surface-variant/70 p-base hover:text-primary-fixed transition-all duration-200 group text-[11px]" href="#">
+<span class="material-symbols-outlined text-[18px]" data-icon="description">description</span>
+<span class="font-nav-label">Documentation</span>
+</a>
+<a class="flex items-center gap-3 text-on-surface-variant/70 p-base hover:text-primary-fixed transition-all duration-200 group text-[11px]" href="#">
+<span class="material-symbols-outlined text-[18px]" data-icon="help_center">help_center</span>
+<span class="font-nav-label">Terminal_Help</span>
+</a>
+</div>
+</aside>
+<!-- Main Content Canvas -->
+<main class="flex-1 ml-0 md:ml-64 pt-16 px-margin-mobile md:px-margin-desktop pb-12 overflow-y-auto custom-scrollbar">
+<!-- Header Section -->
+<section class="mt-8 mb-12 flex flex-col md:flex-row md:items-end justify-between gap-gutter">
+<div>
+<div class="flex items-center gap-2 mb-2">
+<div class="w-2 h-2 bg-primary-fixed shadow-[0_0_8px_#00dbe7]"></div>
+<span class="font-code-block text-[10px] text-primary-fixed uppercase tracking-tighter">System / Language / JavaScript</span>
+</div>
+<h1 class="font-headline-xl text-headline-xl glow-text-cyan leading-none">LANGUAGE_INDEX: JAVASCRIPT</h1>
+<p class="font-body-md text-on-surface-variant/80 mt-4 max-w-2xl">
+                    High-level, multi-paradigm technical specification. Explore core method prototypes and architectural data handling modules.
+                </p>
+</div>
+<div class="flex gap-4">
+<div class="glass-card px-6 py-4 flex flex-col items-center justify-center">
+<span class="font-code-block text-[20px] text-primary-fixed">ES2023</span>
+<span class="font-nav-label text-[10px] text-on-surface-variant">ACTIVE_VER</span>
+</div>
+<div class="glass-card px-6 py-4 flex flex-col items-center justify-center">
+<span class="font-code-block text-[20px] text-tertiary-fixed-dim">98%</span>
+<span class="font-nav-label text-[10px] text-on-surface-variant">NODE_COVERAGE</span>
+</div>
+</div>
+</section>
+<!-- Method Categorization Grid -->
+<div class="grid grid-cols-1 gap-12">
+<!-- Array Methods Section -->
+<section>
+<div class="flex items-center gap-4 mb-6 border-b border-outline-variant/20 pb-2">
+<span class="material-symbols-outlined text-primary-fixed-dim" data-icon="reorder">reorder</span>
+<h2 class="font-headline-md text-headline-md">ARRAY_METHODS</h2>
+<span class="font-code-block text-[12px] text-on-surface-variant/40 ml-auto">INDEX: 0x01-0x04</span>
+</div>
+<div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-gutter">
+<!-- Method: map -->
+<div class="glass-card p-gutter flex flex-col group relative overflow-hidden">
+<span class="absolute top-2 right-2 font-code-block text-[9px] text-on-surface-variant/30">#JS_001</span>
+<h3 class="font-headline-md text-primary group-hover:text-primary-fixed-dim mb-2">.map()</h3>
+<div class="flex gap-2 mb-4">
+<span class="method-tag text-tertiary-fixed-dim border-tertiary-fixed-dim/30">ES6</span>
+<span class="method-tag text-secondary border-secondary/30">H-ORDER</span>
+</div>
+<p class="font-body-md text-[14px] text-on-surface-variant mb-6 leading-relaxed">Creates a new array populated with the results of calling a provided function.</p>
+<div class="mt-auto bg-black p-4 rounded-sm font-code-block text-[12px] text-primary-fixed-dim/80">
+                            arr.map(x =&gt; x * 2);
+                        </div>
+</div>
+<!-- Method: filter -->
+<div class="glass-card p-gutter flex flex-col group relative overflow-hidden">
+<span class="absolute top-2 right-2 font-code-block text-[9px] text-on-surface-variant/30">#JS_002</span>
+<h3 class="font-headline-md text-primary group-hover:text-primary-fixed-dim mb-2">.filter()</h3>
+<div class="flex gap-2 mb-4">
+<span class="method-tag text-tertiary-fixed-dim border-tertiary-fixed-dim/30">ES6</span>
+<span class="method-tag text-primary-fixed-dim border-primary-fixed-dim/30">IMMUTABLE</span>
+</div>
+<p class="font-body-md text-[14px] text-on-surface-variant mb-6 leading-relaxed">Creates a shallow copy of a portion of a given array, filtered down to elements that pass a test.</p>
+<div class="mt-auto bg-black p-4 rounded-sm font-code-block text-[12px] text-primary-fixed-dim/80">
+                            arr.filter(n =&gt; n &gt; 10);
+                        </div>
+</div>
+<!-- Method: reduce -->
+<div class="glass-card p-gutter flex flex-col group relative overflow-hidden">
+<span class="absolute top-2 right-2 font-code-block text-[9px] text-on-surface-variant/30">#JS_003</span>
+<h3 class="font-headline-md text-primary group-hover:text-primary-fixed-dim mb-2">.reduce()</h3>
+<div class="flex gap-2 mb-4">
+<span class="method-tag text-secondary border-secondary/30">ES5+</span>
+<span class="method-tag text-on-primary-container border-on-primary-container/30">COMPLEX</span>
+</div>
+<p class="font-body-md text-[14px] text-on-surface-variant mb-6 leading-relaxed">Executes a user-supplied "reducer" callback function on each element of the array.</p>
+<div class="mt-auto bg-black p-4 rounded-sm font-code-block text-[12px] text-primary-fixed-dim/80">
+                            arr.reduce((acc, c) =&gt; ...);
+                        </div>
+</div>
+<!-- Method: find -->
+<div class="glass-card p-gutter flex flex-col group relative overflow-hidden">
+<span class="absolute top-2 right-2 font-code-block text-[9px] text-on-surface-variant/30">#JS_004</span>
+<h3 class="font-headline-md text-primary group-hover:text-primary-fixed-dim mb-2">.find()</h3>
+<div class="flex gap-2 mb-4">
+<span class="method-tag text-tertiary-fixed-dim border-tertiary-fixed-dim/30">ES6</span>
+<span class="method-tag text-on-secondary-container border-on-secondary-container/30">SEARCH</span>
+</div>
+<p class="font-body-md text-[14px] text-on-surface-variant mb-6 leading-relaxed">Returns the first element in the provided array that satisfies the provided testing function.</p>
+<div class="mt-auto bg-black p-4 rounded-sm font-code-block text-[12px] text-primary-fixed-dim/80">
+                            arr.find(e =&gt; e.id === 1);
+                        </div>
+</div>
+</div>
+</section>
+<!-- String Methods Section -->
+<section>
+<div class="flex items-center gap-4 mb-6 border-b border-outline-variant/20 pb-2">
+<span class="material-symbols-outlined text-primary-fixed-dim" data-icon="text_fields">text_fields</span>
+<h2 class="font-headline-md text-headline-md">STRING_METHODS</h2>
+<span class="font-code-block text-[12px] text-on-surface-variant/40 ml-auto">INDEX: 0x05-0x07</span>
+</div>
+<div class="grid grid-cols-1 md:grid-cols-3 gap-gutter">
+<div class="glass-card p-gutter group">
+<h3 class="font-headline-md text-primary group-hover:text-primary-fixed-dim mb-2">.includes()</h3>
+<div class="flex gap-2 mb-4">
+<span class="method-tag">ES6</span>
+<span class="method-tag">BOOL</span>
+</div>
+<p class="font-body-md text-[14px] text-on-surface-variant mb-4">Determines whether one string may be found within another string.</p>
+<div class="bg-black p-4 rounded-sm font-code-block text-[12px] text-primary-fixed-dim/80">
+                            str.includes('node');
+                        </div>
+</div>
+<div class="glass-card p-gutter group">
+<h3 class="font-headline-md text-primary group-hover:text-primary-fixed-dim mb-2">.slice()</h3>
+<div class="flex gap-2 mb-4">
+<span class="method-tag">LEGACY</span>
+<span class="method-tag">SUBSET</span>
+</div>
+<p class="font-body-md text-[14px] text-on-surface-variant mb-4">Extracts a section of a string and returns it as a new string.</p>
+<div class="bg-black p-4 rounded-sm font-code-block text-[12px] text-primary-fixed-dim/80">
+                            str.slice(0, 5);
+                        </div>
+</div>
+<div class="glass-card p-gutter group">
+<h3 class="font-headline-md text-primary group-hover:text-primary-fixed-dim mb-2">.replace()</h3>
+<div class="flex gap-2 mb-4">
+<span class="method-tag">REGEX</span>
+<span class="method-tag">TRANSFORM</span>
+</div>
+<p class="font-body-md text-[14px] text-on-surface-variant mb-4">Returns a new string with some or all matches of a pattern replaced.</p>
+<div class="bg-black p-4 rounded-sm font-code-block text-[12px] text-primary-fixed-dim/80">
+                            str.replace(/a/g, 'b');
+                        </div>
+</div>
+</div>
+</section>
+<!-- Object Methods Section -->
+<section>
+<div class="flex items-center gap-4 mb-6 border-b border-outline-variant/20 pb-2">
+<span class="material-symbols-outlined text-primary-fixed-dim" data-icon="data_object">data_object</span>
+<h2 class="font-headline-md text-headline-md">OBJECT_METHODS</h2>
+<span class="font-code-block text-[12px] text-on-surface-variant/40 ml-auto">INDEX: 0x08-0x0A</span>
+</div>
+<div class="grid grid-cols-1 md:grid-cols-2 gap-gutter">
+<div class="glass-card p-gutter group flex flex-col md:flex-row gap-gutter items-start">
+<div class="flex-1">
+<h3 class="font-headline-md text-primary group-hover:text-primary-fixed-dim mb-2">Object.keys()</h3>
+<div class="flex gap-2 mb-4">
+<span class="method-tag">STATIC</span>
+<span class="method-tag">ENUM</span>
+</div>
+<p class="font-body-md text-[14px] text-on-surface-variant">Returns an array of a given object's own enumerable string-keyed property names.</p>
+</div>
+<div class="w-full md:w-64 bg-black p-4 rounded-sm font-code-block text-[12px] text-primary-fixed-dim/80 self-center">
+                            Object.keys(sys_config);
+                        </div>
+</div>
+<div class="glass-card p-gutter group flex flex-col md:flex-row gap-gutter items-start">
+<div class="flex-1">
+<h3 class="font-headline-md text-primary group-hover:text-primary-fixed-dim mb-2">Object.assign()</h3>
+<div class="flex gap-2 mb-4">
+<span class="method-tag">ES6</span>
+<span class="method-tag">MUTATE</span>
+</div>
+<p class="font-body-md text-[14px] text-on-surface-variant">Copies all enumerable own properties from one or more source objects to a target object.</p>
+</div>
+<div class="w-full md:w-64 bg-black p-4 rounded-sm font-code-block text-[12px] text-primary-fixed-dim/80 self-center">
+                            Object.assign({}, a, b);
+                        </div>
+</div>
+</div>
+</section>
+</div>
+<!-- System Architecture Visualization (Graphic Accent) -->
+<section class="mt-12 h-64 relative overflow-hidden glass-card rounded-xl">
+<div class="absolute inset-0 opacity-20 pointer-events-none">
+<img alt="Background Architecture" class="w-full h-full object-cover" data-alt="A complex technological circuit board blueprint rendered in glowing cyan lines over a pitch-black background. Thin data paths connect various abstract nodes that pulse with soft light. The aesthetic is purely technical and minimalist, resembling a high-fidelity CAD drawing or a futuristic server farm monitoring dashboard. No human elements, only digital architecture." src="https://lh3.googleusercontent.com/aida-public/AB6AXuC26d00t7ODTuHgN2xNuAHyPR9AWVgqs_X736nRL-iwQ_pYCl0ttDZqASLGgQvoVpH0NQ0UKyV7F-I7zuveV2zmCi0VBy3zihiOLNexzQyhv4d72V97IHKINwHeMr_dsD8QkMkxd-frq1l7Z-FXlNg-Sae5gclHQZSu81w0Zx1NVwFCcz2LhH84l4cMVlFxnGiEylI-ORj5jLOLRT5waPidYp1x9IoO2Qa-bHLdwsHuEAYPmqjJRIaPCobHy9tNf_U7sipa4DYz4LXc"/>
+</div>
+<div class="relative z-10 flex flex-col justify-center items-center h-full text-center px-gutter">
+<span class="material-symbols-outlined text-primary-fixed text-4xl mb-4" data-icon="terminal" style="font-variation-settings: 'FILL' 1;">terminal</span>
+<h3 class="font-headline-md text-white mb-2 uppercase tracking-widest">Deep Engine Analytics</h3>
+<p class="font-body-md text-on-surface-variant max-w-lg">Continuous monitoring of V8 performance metrics and memory heap allocation. Optimization status: NOMINAL.</p>
+</div>
+</section>
+</main>
+<script>
+        // Simple search filtering logic
+        const searchInput = document.querySelector('input[placeholder="QUERY_METHODS..."]');
+        const cards = document.querySelectorAll('.glass-card');
+
+        searchInput.addEventListener('input', (e) => {
+            const term = e.target.value.toLowerCase();
+            cards.forEach(card => {
+                const text = card.textContent.toLowerCase();
+                if (text.includes(term)) {
+                    card.style.display = 'flex';
+                    card.style.opacity = '1';
+                } else {
+                    card.style.display = 'none';
+                    card.style.opacity = '0';
+                }
+            });
+        });
+
+        // Interactive Glow Interaction
+        document.querySelectorAll('.glass-card').forEach(card => {
+            card.addEventListener('mousemove', (e) => {
+                const rect = card.getBoundingClientRect();
+                const x = e.clientX - rect.left;
+                const y = e.clientY - rect.top;
+                card.style.setProperty('--mouse-x', `${x}px`);
+                card.style.setProperty('--mouse-y', `${y}px`);
+                card.style.background = `radial-gradient(circle at ${x}px ${y}px, rgba(0, 219, 231, 0.1) 0%, rgba(30, 31, 37, 0.6) 50%)`;
+            });
+            card.addEventListener('mouseleave', () => {
+                card.style.background = `rgba(30, 31, 37, 0.6)`;
+            });
+        });
+    </script>
+</body></html>

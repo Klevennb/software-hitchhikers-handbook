@@ -1,0 +1,468 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&amp;family=JetBrains+Mono:wght@400;500;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<style>
+        :root {
+            --cyan-glow: rgba(0, 242, 255, 0.3);
+            --grid-line: rgba(185, 202, 203, 0.1);
+        }
+        body {
+            background-color: #121318;
+            background-image: 
+                linear-gradient(var(--grid-line) 1px, transparent 1px),
+                linear-gradient(90deg, var(--grid-line) 1px, transparent 1px);
+            background-size: 32px 32px;
+            color: #e3e1e9;
+        }
+        .glass-panel {
+            background: rgba(18, 19, 24, 0.6);
+            backdrop-filter: blur(16px);
+            border: 1px solid rgba(58, 73, 75, 0.4);
+            position: relative;
+        }
+        .glass-panel::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 1px;
+            background: linear-gradient(90deg, #00f2ff, transparent);
+            opacity: 0.5;
+        }
+        .glow-accent {
+            box-shadow: 0 0 15px var(--cyan-glow);
+        }
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+        .node-line {
+            background: repeating-linear-gradient(90deg, #3a494b 0, #3a494b 4px, transparent 4px, transparent 8px);
+        }
+    </style>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "error-container": "#93000a",
+                        "on-tertiary-fixed": "#002113",
+                        "surface-dim": "#121318",
+                        "surface": "#121318",
+                        "on-secondary-container": "#d6a9ff",
+                        "on-primary-fixed": "#002022",
+                        "on-primary-container": "#006a71",
+                        "secondary-fixed": "#f0dbff",
+                        "outline-variant": "#3a494b",
+                        "surface-container-high": "#292a2f",
+                        "background": "#121318",
+                        "surface-container-highest": "#34343a",
+                        "on-secondary-fixed": "#2c0051",
+                        "primary-fixed": "#74f5ff",
+                        "outline": "#849495",
+                        "on-error-container": "#ffdad6",
+                        "error": "#ffb4ab",
+                        "tertiary-fixed": "#6ffbbe",
+                        "secondary": "#ddb7ff",
+                        "on-primary-fixed-variant": "#004f54",
+                        "inverse-surface": "#e3e1e9",
+                        "inverse-on-surface": "#2f3036",
+                        "on-tertiary-container": "#006e4b",
+                        "on-secondary-fixed-variant": "#6900b3",
+                        "inverse-primary": "#00696f",
+                        "tertiary": "#e1ffec",
+                        "on-secondary": "#490080",
+                        "primary-container": "#00f2ff",
+                        "on-tertiary": "#003824",
+                        "surface-container-low": "#1a1b21",
+                        "primary-fixed-dim": "#00dbe7",
+                        "tertiary-fixed-dim": "#4edea3",
+                        "secondary-fixed-dim": "#ddb7ff",
+                        "surface-variant": "#34343a",
+                        "on-error": "#690005",
+                        "on-primary": "#00363a",
+                        "primary": "#e1fdff",
+                        "surface-tint": "#00dbe7",
+                        "surface-container": "#1e1f25",
+                        "on-tertiary-fixed-variant": "#005236",
+                        "on-surface": "#e3e1e9",
+                        "surface-container-lowest": "#0d0e13",
+                        "on-background": "#e3e1e9",
+                        "secondary-container": "#6f00be",
+                        "on-surface-variant": "#b9cacb",
+                        "surface-bright": "#38393f",
+                        "tertiary-container": "#67f4b7"
+                    },
+                    borderRadius: {
+                        "DEFAULT": "0.125rem",
+                        "lg": "0.25rem",
+                        "xl": "0.5rem",
+                        "full": "0.75rem"
+                    },
+                    spacing: {
+                        "margin-mobile": "16px",
+                        "gutter": "24px",
+                        "base": "8px",
+                        "container-max": "1200px",
+                        "margin-desktop": "64px"
+                    },
+                    fontFamily: {
+                        "headline-lg-mobile": ["Inter"],
+                        "code-block": ["JetBrains Mono"],
+                        "headline-xl": ["Inter"],
+                        "headline-md": ["Inter"],
+                        "body-lg": ["Inter"],
+                        "headline-lg": ["Inter"],
+                        "nav-label": ["JetBrains Mono"],
+                        "body-md": ["Inter"]
+                    },
+                    fontSize: {
+                        "headline-lg-mobile": ["28px", {"lineHeight": "36px", "fontWeight": "700"}],
+                        "code-block": ["14px", {"lineHeight": "20px", "fontWeight": "400"}],
+                        "headline-xl": ["48px", {"lineHeight": "56px", "letterSpacing": "-0.02em", "fontWeight": "800"}],
+                        "headline-md": ["24px", {"lineHeight": "32px", "fontWeight": "600"}],
+                        "body-lg": ["18px", {"lineHeight": "28px", "fontWeight": "400"}],
+                        "headline-lg": ["32px", {"lineHeight": "40px", "letterSpacing": "-0.01em", "fontWeight": "700"}],
+                        "nav-label": ["12px", {"lineHeight": "16px", "letterSpacing": "0.1em", "fontWeight": "500"}],
+                        "body-md": ["16px", {"lineHeight": "24px", "fontWeight": "400"}]
+                    }
+                }
+            }
+        }
+    </script>
+</head>
+<body class="flex flex-col min-h-screen">
+<!-- TopNavBar -->
+<nav class="w-full top-0 sticky z-50 bg-surface/60 backdrop-blur-xl border-b border-outline-variant/20 flex justify-between items-center px-margin-desktop h-16">
+<div class="font-headline-md text-headline-md text-primary tracking-tighter">CYBERSPACE_OS</div>
+<div class="hidden md:flex items-center space-x-gutter">
+<a class="font-nav-label text-nav-label text-on-surface-variant hover:text-primary transition-colors" href="#">DOMAINS</a>
+<a class="font-nav-label text-nav-label text-primary font-bold border-b-2 border-primary pb-1" href="#">ARCHIVE</a>
+<a class="font-nav-label text-nav-label text-on-surface-variant hover:text-primary transition-colors" href="#">TERMINAL</a>
+</div>
+<div class="flex items-center space-x-4">
+<span class="material-symbols-outlined text-primary cursor-pointer hover:bg-primary/10 p-2 transition-all">account_tree</span>
+<span class="material-symbols-outlined text-primary cursor-pointer hover:bg-primary/10 p-2 transition-all">settings</span>
+<div class="w-8 h-8 rounded-full border border-primary/30 overflow-hidden">
+<img alt="Engineer Avatar" class="w-full h-full object-cover" src="https://lh3.googleusercontent.com/aida-public/AB6AXuD1xrDiE0AHXJGfQVnZ4ByY3ykAa0iOiQnToHoZQDE1RXIUOeYCXKRnmOA9iv-1SBk66I4GxpUgW2ZAf-pJHzP7-8OYWoS_jewduhshhKc_20nAkCjBhej1uMMGUbNujvKb_DufxILYG7zl2cHaTQVUCTtcumInQDajcRi932BOI47jpkjbW88IXlG5bctnoXhgc2jK_7rmVAxcqLMLbBOQ9eVlRYHMXJ4pC0lx0rHx4VETSCzZaG8TxFv0Rk-v8np5CD1VZ-HCjLxr"/>
+</div>
+</div>
+</nav>
+<div class="flex flex-1 overflow-hidden">
+<!-- SideNavBar -->
+<aside class="hidden md:flex h-screen w-64 sticky left-0 flex-col py-base bg-surface-dim/80 backdrop-blur-2xl border-r border-outline-variant/20">
+<div class="px-6 py-4 mb-8">
+<div class="font-headline-md text-headline-md text-primary">NODE_MANAGER</div>
+<div class="font-code-block text-[10px] text-on-surface-variant tracking-widest opacity-60">V.2.0.4-STABLE</div>
+</div>
+<nav class="flex-1 space-y-2 px-4">
+<div class="group flex items-center px-4 py-2 font-code-block text-code-block text-on-surface-variant opacity-70 hover:opacity-100 hover:text-primary-fixed transition-all duration-200 cursor-pointer">
+<span class="material-symbols-outlined mr-3">hub</span>
+<span>THE_NEXUS</span>
+</div>
+<div class="group flex items-center px-4 py-2 font-code-block text-code-block text-primary before:content-['['] after:content-[']'] before:mr-1 after:ml-1 font-bold transition-all duration-200 cursor-pointer">
+<span class="material-symbols-outlined mr-3">terminal</span>
+<span>LANGUAGES</span>
+</div>
+<div class="group flex items-center px-4 py-2 font-code-block text-code-block text-on-surface-variant opacity-70 hover:opacity-100 hover:text-primary-fixed transition-all duration-200 cursor-pointer">
+<span class="material-symbols-outlined mr-3">memory</span>
+<span>SYSTEMS</span>
+</div>
+<div class="group flex items-center px-4 py-2 font-code-block text-code-block text-on-surface-variant opacity-70 hover:opacity-100 hover:text-primary-fixed transition-all duration-200 cursor-pointer">
+<span class="material-symbols-outlined mr-3">style</span>
+<span>FLASHCARDS</span>
+</div>
+</nav>
+<div class="px-4 py-6 border-t border-outline-variant/20">
+<div class="group flex items-center px-4 py-2 font-code-block text-code-block text-on-surface-variant opacity-70 hover:opacity-100 hover:text-primary-fixed transition-all duration-200 cursor-pointer">
+<span class="material-symbols-outlined mr-3">logout</span>
+<span>LOG_OUT</span>
+</div>
+</div>
+</aside>
+<!-- Main Content -->
+<main class="flex-1 overflow-y-auto px-4 md:px-margin-desktop py-12">
+<!-- Header Section -->
+<header class="mb-12">
+<div class="inline-block px-3 py-1 border border-primary-container/30 bg-primary-container/5 font-code-block text-[12px] text-primary-fixed-dim mb-4">
+                    DOMAIN :: DESIGN_PATTERNS
+                </div>
+<h1 class="font-headline-xl text-headline-xl text-primary mb-2">PATTERN_DEEP_DIVE: <span class="text-primary-container">FACTORY_METHOD</span></h1>
+<div class="flex space-x-gutter">
+<div class="flex items-center space-x-2">
+<span class="font-code-block text-nav-label text-on-surface-variant">PERFORMANCE:</span>
+<span class="font-code-block text-nav-label text-tertiary-fixed-dim">LOW_OVERHEAD</span>
+</div>
+<div class="flex items-center space-x-2">
+<span class="font-code-block text-nav-label text-on-surface-variant">COMPLEXITY:</span>
+<span class="font-code-block text-nav-label text-secondary">MEDIUM</span>
+</div>
+</div>
+</header>
+<div class="grid grid-cols-1 lg:grid-cols-12 gap-gutter">
+<!-- WHAT_IT_IS Section -->
+<section class="lg:col-span-7">
+<div class="glass-panel p-8 rounded-lg h-full">
+<div class="flex justify-between items-start mb-6">
+<h2 class="font-headline-md text-headline-md text-primary">01 // WHAT_IT_IS</h2>
+<span class="font-code-block text-[10px] text-outline opacity-40">REF_ID: 0x4F2A</span>
+</div>
+<p class="font-body-lg text-body-lg text-on-surface-variant leading-relaxed">
+                            The Factory Method is a creational design pattern that provides an interface for creating objects in a superclass, but allows subclasses to alter the type of objects that will be created. It solves the problem of creating product objects without specifying their concrete classes.
+                        </p>
+<div class="mt-8 grid grid-cols-2 gap-4">
+<div class="p-4 bg-surface-container-low border border-outline-variant/30">
+<h3 class="font-code-block text-nav-label text-primary-container mb-2">INTENT</h3>
+<p class="font-body-md text-body-md text-on-surface-variant opacity-80">Define an interface for creating an object, but let subclasses decide which class to instantiate.</p>
+</div>
+<div class="p-4 bg-surface-container-low border border-outline-variant/30">
+<h3 class="font-code-block text-nav-label text-primary-container mb-2">ALIAS</h3>
+<p class="font-body-md text-body-md text-on-surface-variant opacity-80">Virtual Constructor</p>
+</div>
+</div>
+</div>
+</section>
+<!-- QUICK_ACTION Section -->
+<section class="lg:col-span-5 flex flex-col space-y-gutter">
+<div class="glass-panel p-8 rounded-lg bg-primary-container/5 border-primary-container/20 flex flex-col justify-center items-center text-center">
+<span class="material-symbols-outlined text-primary-container text-5xl mb-4 animate-pulse" style="font-variation-settings: 'FILL' 1;">bolt</span>
+<h3 class="font-headline-md text-headline-md text-primary mb-2">KNOWLEDGE_CHECK</h3>
+<p class="font-body-md text-body-md text-on-surface-variant mb-6">Test your mastery of the Factory Method pattern through a high-stakes simulation.</p>
+<button class="w-full py-4 bg-primary-container text-on-primary font-code-bold font-bold rounded-lg hover:scale-[1.02] transition-transform glow-accent uppercase tracking-widest">
+                            RUN_QUIZ_MODE
+                        </button>
+</div>
+<div class="glass-panel p-6 rounded-lg">
+<h3 class="font-code-block text-nav-label text-on-surface-variant mb-4 flex items-center">
+<span class="material-symbols-outlined text-sm mr-2">lightbulb</span> CORE_BENEFITS
+                        </h3>
+<ul class="space-y-3">
+<li class="flex items-center font-body-md text-body-md text-on-surface-variant">
+<span class="w-1.5 h-1.5 bg-primary-container mr-3"></span> Decoupling of creation logic
+                            </li>
+<li class="flex items-center font-body-md text-body-md text-on-surface-variant">
+<span class="w-1.5 h-1.5 bg-primary-container mr-3"></span> Open/Closed Principle adherence
+                            </li>
+<li class="flex items-center font-body-md text-body-md text-on-surface-variant">
+<span class="w-1.5 h-1.5 bg-primary-container mr-3"></span> Single Responsibility Principle
+                            </li>
+</ul>
+</div>
+</section>
+<!-- VISUAL_SCHEMA -->
+<section class="lg:col-span-12">
+<div class="glass-panel p-8 rounded-lg">
+<div class="flex justify-between items-start mb-12">
+<h2 class="font-headline-md text-headline-md text-primary">02 // VISUAL_SCHEMA</h2>
+<div class="flex space-x-2">
+<div class="w-3 h-3 bg-primary-container"></div>
+<div class="w-3 h-3 bg-outline-variant"></div>
+<div class="w-3 h-3 bg-outline-variant"></div>
+</div>
+</div>
+<!-- Diagram Construction -->
+<div class="relative grid grid-cols-2 md:grid-cols-4 gap-8 py-12 px-4 border-t border-b border-outline-variant/10">
+<!-- Creator -->
+<div class="flex flex-col items-center group">
+<div class="w-full max-w-[180px] p-4 bg-surface-container-highest border-2 border-primary-container/40 rounded-lg text-center relative z-10">
+<div class="font-code-block text-[10px] text-primary-container mb-1">ABSTRACT</div>
+<div class="font-headline-md text-body-lg font-bold text-primary">Creator</div>
+<div class="h-px w-full bg-outline-variant/30 my-2"></div>
+<div class="font-code-block text-[12px] text-on-surface-variant">+ factoryMethod()</div>
+</div>
+<div class="h-12 w-px node-line"></div>
+<div class="w-full max-w-[180px] p-4 bg-surface-container border border-outline-variant/50 rounded-lg text-center relative z-10">
+<div class="font-headline-md text-body-lg font-bold text-on-surface">ConcreteCreator</div>
+<div class="h-px w-full bg-outline-variant/30 my-2"></div>
+<div class="font-code-block text-[12px] text-primary-fixed-dim italic">returns ConcreteProduct</div>
+</div>
+</div>
+<!-- Spacer and Connector -->
+<div class="hidden md:flex items-center justify-center pt-8">
+<div class="w-full h-px node-line relative">
+<div class="absolute right-0 -top-1.5 text-outline-variant material-symbols-outlined text-lg">chevron_right</div>
+</div>
+</div>
+<!-- Product -->
+<div class="flex flex-col items-center group">
+<div class="w-full max-w-[180px] p-4 bg-surface-container-highest border-2 border-tertiary-fixed-dim/40 rounded-lg text-center relative z-10">
+<div class="font-code-block text-[10px] text-tertiary-fixed-dim mb-1">INTERFACE</div>
+<div class="font-headline-md text-body-lg font-bold text-primary">Product</div>
+<div class="h-px w-full bg-outline-variant/30 my-2"></div>
+<div class="font-code-block text-[12px] text-on-surface-variant">+ doAction()</div>
+</div>
+<div class="h-12 w-px node-line"></div>
+<div class="w-full max-w-[180px] p-4 bg-surface-container border border-outline-variant/50 rounded-lg text-center relative z-10">
+<div class="font-headline-md text-body-lg font-bold text-on-surface">ConcreteProduct</div>
+<div class="h-px w-full bg-outline-variant/30 my-2"></div>
+<div class="font-code-block text-[12px] text-tertiary-fixed-dim">implements Product</div>
+</div>
+</div>
+<!-- Metadata Panel -->
+<div class="col-span-2 md:col-span-1 glass-panel bg-surface-container-lowest p-6 border-l-4 border-primary-container">
+<div class="font-code-block text-[10px] text-on-surface-variant opacity-50 mb-2">SYSTEM_LOG</div>
+<div class="font-body-md text-body-md text-on-surface-variant italic">
+                                    "The Creator provides the core business logic while delegating the instantiation of the Product to its subclasses. This allows for runtime flexibility and high decoupling."
+                                </div>
+</div>
+</div>
+</div>
+</section>
+<!-- CODE_IMPLEMENTATION -->
+<section class="lg:col-span-8">
+<div class="glass-panel rounded-lg overflow-hidden flex flex-col h-full">
+<div class="bg-surface-container-highest px-6 py-3 flex justify-between items-center">
+<div class="flex items-center space-x-4">
+<div class="flex space-x-1.5">
+<div class="w-3 h-3 rounded-full bg-error/40"></div>
+<div class="w-3 h-3 rounded-full bg-secondary/40"></div>
+<div class="w-3 h-3 rounded-full bg-tertiary-fixed-dim/40"></div>
+</div>
+<span class="font-code-block text-[12px] text-on-surface-variant">ui_button_factory.ts</span>
+</div>
+<button class="font-code-block text-[12px] text-primary-container flex items-center hover:bg-primary-container/10 px-2 py-1 transition-all" id="copy-btn">
+<span class="material-symbols-outlined text-[16px] mr-1">content_copy</span> COPY_CODE
+                            </button>
+</div>
+<div class="flex-1 bg-black p-6 overflow-x-auto">
+<pre class="font-code-block text-code-block leading-relaxed"><span class="text-secondary">interface</span> <span class="text-primary-fixed">Button</span> {
+    render(): <span class="text-tertiary-fixed-dim">void</span>;
+    onClick(f: Function): <span class="text-tertiary-fixed-dim">void</span>;
+}
+
+<span class="text-secondary">class</span> <span class="text-primary-fixed">WindowsButton</span> <span class="text-secondary">implements</span> <span class="text-primary-fixed">Button</span> {
+    render() { console.log(<span class="text-primary-container">"Rendering a Win-style button."</span>); }
+}
+
+<span class="text-secondary">class</span> <span class="text-primary-fixed">HTMLButton</span> <span class="text-secondary">implements</span> <span class="text-primary-fixed">Button</span> {
+    render() { console.log(<span class="text-primary-container">"Rendering a HTML-style button."</span>); }
+}
+
+<span class="text-secondary">abstract class</span> <span class="text-primary-fixed">Dialog</span> {
+    <span class="text-secondary">public abstract</span> createButton(): <span class="text-primary-fixed">Button</span>;
+
+    render() {
+        <span class="text-secondary">const</span> okButton = <span class="text-secondary">this</span>.createButton();
+        okButton.render();
+    }
+}
+
+<span class="text-secondary">class</span> <span class="text-primary-fixed">WindowsDialog</span> <span class="text-secondary">extends</span> <span class="text-primary-fixed">Dialog</span> {
+    createButton() { <span class="text-secondary">return new</span> <span class="text-primary-fixed">WindowsButton</span>(); }
+}</pre>
+</div>
+</div>
+</section>
+<!-- USE_CASES & ASYMMETRIC DETAILS -->
+<section class="lg:col-span-4 flex flex-col space-y-gutter">
+<div class="glass-panel p-6 rounded-lg flex-1">
+<h2 class="font-headline-md text-headline-md text-primary mb-6">03 // USE_CASES</h2>
+<div class="space-y-6">
+<div class="relative pl-6">
+<div class="absolute left-0 top-0 bottom-0 w-1 bg-primary-container"></div>
+<h4 class="font-code-block text-nav-label text-primary-fixed-dim mb-1">FRAMEWORK_DEV</h4>
+<p class="font-body-md text-body-md text-on-surface-variant">Allowing library users to extend internal components without modifying source code.</p>
+</div>
+<div class="relative pl-6">
+<div class="absolute left-0 top-0 bottom-0 w-1 bg-outline-variant"></div>
+<h4 class="font-code-block text-nav-label text-primary-fixed-dim mb-1">DYNAMIC_RESOURCES</h4>
+<p class="font-body-md text-body-md text-on-surface-variant">Creating different connection types (MySQL vs Postgres) based on configuration files.</p>
+</div>
+<div class="relative pl-6">
+<div class="absolute left-0 top-0 bottom-0 w-1 bg-outline-variant"></div>
+<h4 class="font-code-block text-nav-label text-primary-fixed-dim mb-1">TESTING_MOCKS</h4>
+<p class="font-body-md text-body-md text-on-surface-variant">Injecting mock objects into unit tests by overriding the factory method.</p>
+</div>
+</div>
+</div>
+<div class="bg-surface-container-highest p-6 rounded-lg relative overflow-hidden">
+<div class="absolute -right-4 -bottom-4 opacity-10">
+<span class="material-symbols-outlined text-[120px]">architecture</span>
+</div>
+<h4 class="font-code-block text-nav-label text-on-surface-variant mb-4 uppercase tracking-[3px]">Telemetry_Data</h4>
+<div class="space-y-4">
+<div class="flex justify-between items-center border-b border-outline-variant/20 pb-2">
+<span class="font-body-md text-body-md text-on-surface-variant">Scalability</span>
+<span class="font-code-block text-nav-label text-tertiary-fixed-dim">OPTIMAL</span>
+</div>
+<div class="flex justify-between items-center border-b border-outline-variant/20 pb-2">
+<span class="font-body-md text-body-md text-on-surface-variant">Maintenance</span>
+<span class="font-code-block text-nav-label text-secondary">EASY</span>
+</div>
+<div class="flex justify-between items-center border-b border-outline-variant/20 pb-2">
+<span class="font-body-md text-body-md text-on-surface-variant">Adoption_Rate</span>
+<span class="font-code-block text-nav-label text-on-surface">82.4%</span>
+</div>
+</div>
+</div>
+</section>
+</div>
+<!-- Footer Decorative -->
+<footer class="mt-20 border-t border-outline-variant/20 pt-8 pb-12 flex justify-between items-center">
+<div class="font-code-block text-[12px] text-on-surface-variant flex items-center">
+<span class="w-2 h-2 bg-green-500 rounded-full animate-pulse mr-2"></span>
+                    TERMINAL_STATUS: ACTIVE // SECTOR: DESIGN_PATTERNS
+                </div>
+<div class="flex space-x-6">
+<span class="material-symbols-outlined text-outline-variant hover:text-primary cursor-pointer transition-colors">share</span>
+<span class="material-symbols-outlined text-outline-variant hover:text-primary cursor-pointer transition-colors">bookmark</span>
+</div>
+</footer>
+</main>
+</div>
+<!-- Mobile Navigation (BottomNavBar) -->
+<nav class="md:hidden sticky bottom-0 w-full bg-surface/80 backdrop-blur-xl flex justify-around items-center h-16 border-t border-outline-variant/20 z-50">
+<div class="flex flex-col items-center text-on-surface-variant">
+<span class="material-symbols-outlined">hub</span>
+<span class="font-nav-label text-[10px]">NEXUS</span>
+</div>
+<div class="flex flex-col items-center text-primary">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">terminal</span>
+<span class="font-nav-label text-[10px]">TERMINAL</span>
+</div>
+<div class="flex flex-col items-center text-on-surface-variant">
+<span class="material-symbols-outlined">memory</span>
+<span class="font-nav-label text-[10px]">SYSTEMS</span>
+</div>
+<div class="flex flex-col items-center text-on-surface-variant">
+<span class="material-symbols-outlined">style</span>
+<span class="font-nav-label text-[10px]">CARDS</span>
+</div>
+</nav>
+<script>
+        document.getElementById('copy-btn').addEventListener('click', function() {
+            const btn = this;
+            const originalText = btn.innerHTML;
+            btn.innerHTML = '<span class="material-symbols-outlined text-[16px] mr-1">check</span> COPIED!';
+            btn.classList.add('text-tertiary-fixed-dim');
+            
+            // Animation pulse
+            btn.parentElement.classList.add('animate-pulse');
+            setTimeout(() => {
+                btn.innerHTML = originalText;
+                btn.classList.remove('text-tertiary-fixed-dim');
+                btn.parentElement.classList.remove('animate-pulse');
+            }, 2000);
+        });
+
+        // Interactive Schematic
+        const diagramNodes = document.querySelectorAll('.group .bg-surface-container');
+        diagramNodes.forEach(node => {
+            node.addEventListener('mouseenter', () => {
+                node.classList.add('border-primary-container');
+                node.style.boxShadow = '0 0 10px rgba(0, 242, 255, 0.2)';
+            });
+            node.addEventListener('mouseleave', () => {
+                node.classList.remove('border-primary-container');
+                node.style.boxShadow = 'none';
+            });
+        });
+    </script>
+</body></html>
