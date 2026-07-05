@@ -3,12 +3,12 @@ import { AppShell } from "@/components/app-shell/AppShell";
 import { TopicCard } from "@/components/content/TopicCard";
 import { ButtonLink } from "@/components/ui/Button";
 import { GlassPanel } from "@/components/ui/GlassPanel";
-import { getAllTopics, getConceptsByLanguage } from "@/lib/content/content-query";
+import { getAllTopics, getRecentArchivedConcepts } from "@/lib/content/content-query";
 import { routes } from "@/lib/routes";
 
 export default function HomePage() {
   const topics = getAllTopics();
-  const recent = getConceptsByLanguage("javascript").slice(0, 3);
+  const recent = getRecentArchivedConcepts();
 
   return (
     <AppShell>
@@ -91,7 +91,7 @@ export default function HomePage() {
                 </div>
                 <div className="min-w-0 flex-1">
                   <p className="font-mono text-[10px] uppercase tracking-widest text-primary-fixed-dim">
-                    Languages / JavaScript
+                    {concept.topicSlug} / {concept.category}
                   </p>
                   <h3 className="truncate text-lg font-semibold text-primary group-hover:text-primary-fixed">
                     {concept.title}

@@ -1206,6 +1206,187 @@ export const concepts: Concept[] = [
     quizQuestions: []
   },
   {
+    slug: "dynamic-programming",
+    title: "Dynamic Programming",
+    subtitle: "Solve repeated subproblems once, then reuse their answers",
+    summary:
+      "Dynamic programming turns repeated recursive work into stored subproblem results using memoization or tabulation.",
+    difficulty: "INTERMEDIATE",
+    type: "STRATEGY",
+    languageSlug: "typescript",
+    topicSlug: "philosophies",
+    category: "Problem Solving",
+    sortOrder: 1,
+    sections: [
+      {
+        type: "MENTAL_MODEL",
+        title: "Mental Model",
+        body:
+          "Treat a problem as a graph of smaller questions. A naive recursive solution may visit the same question many times. Dynamic programming identifies each unique state, computes its answer once, and reuses it wherever that state appears."
+      },
+      {
+        type: "CUSTOM",
+        title: "When A Problem Fits",
+        body: [
+          explained(
+            "Overlapping subproblems: different decision paths reach the same state.",
+            "Caching that state's answer removes duplicated work; without overlap, storing results may add complexity without a useful speedup."
+          ),
+          explained(
+            "Optimal substructure: a problem's answer can be built from correct answers to smaller versions of the problem.",
+            "This makes a recurrence possible: the current answer is a combination, minimum, or maximum of previously solved states."
+          )
+        ]
+      },
+      {
+        type: "CUSTOM",
+        title: "Design The Solution",
+        body: [
+          explained("Define the state.", "Write one sentence describing exactly what dp[i], dp[i][j], or a memo key represents."),
+          explained("Write the transition.", "Express the current state using smaller states and the choice being made."),
+          explained("Set the base cases.", "Give direct answers for the smallest valid states so evaluation can stop or begin."),
+          explained("Choose an evaluation order.", "Use top-down memoization for a natural recursive model or bottom-up tabulation when dependencies have a clear order."),
+          explained("Return the requested state.", "The final answer is often one table cell, but its location follows from the state definition rather than convention.")
+        ]
+      },
+      {
+        type: "CUSTOM",
+        title: "More DP Subproblems",
+        body: [
+          explained("Grid paths — state: paths to (row, column).", "Transition: paths(r, c) = paths(r - 1, c) + paths(r, c - 1)."),
+          explained("House robber — state: maximum value through house i.", "Transition: dp[i] = max(dp[i - 1], values[i] + dp[i - 2])."),
+          explained("0/1 knapsack — state: best value using the first i items at capacity c.", "Transition: skip the item or include it once when its weight fits."),
+          explained("Longest common subsequence — state: LCS length for prefixes ending at i and j.", "Transition: extend on equal characters; otherwise drop one character from either prefix."),
+          explained("Edit distance — state: edits needed to transform one prefix into another.", "Transition: take the cheapest insert, delete, or replace operation."),
+          explained("Longest increasing subsequence — state: longest increasing sequence ending at i.", "Transition: extend the best earlier state whose value is smaller than values[i].")
+        ]
+      },
+      {
+        type: "COMMON_MISTAKES",
+        title: "Common Mistakes",
+        body: [
+          "Starting with a table before defining what each state means.",
+          "Caching with an incomplete key that merges different subproblems.",
+          "Filling a bottom-up table before the states it depends on are available.",
+          "Using dynamic programming when subproblems do not overlap.",
+          "Claiming O(n) space when a nested table or recursion stack also consumes memory."
+        ]
+      },
+      {
+        type: "WHEN_TO_USE",
+        title: "Memoization Or Tabulation?",
+        body: [
+          explained("Memoization is top-down: write recursion first and cache answers by state.", "It follows the problem definition closely and only evaluates reachable states, but retains recursion overhead and stack depth."),
+          explained("Tabulation is bottom-up: order states so every dependency is already solved.", "It avoids recursive calls and can make space optimization clearer, but may compute states the final answer never needs.")
+        ]
+      }
+    ],
+    codeExamples: [
+      {
+        title: "Fibonacci: From Repetition To Memoization",
+        description: "The memo key is n; each distinct Fibonacci number is computed once.",
+        language: "ts",
+        code: "function fibonacci(n: number, memo = new Map<number, number>()): number {\n  if (n <= 1) return n;\n  if (memo.has(n)) return memo.get(n)!;\n\n  const result = fibonacci(n - 1, memo) + fibonacci(n - 2, memo);\n  memo.set(n, result);\n  return result;\n}\n\nconsole.log(fibonacci(10));",
+        output: "55"
+      },
+      {
+        title: "Climbing Stairs: Bottom-Up Tabulation",
+        description: "ways[i] counts routes to step i when each move climbs one or two steps.",
+        language: "ts",
+        code: "function climbingStairs(n: number): number {\n  if (n <= 1) return 1;\n\n  const ways = Array<number>(n + 1).fill(0);\n  ways[0] = 1;\n  ways[1] = 1;\n\n  for (let step = 2; step <= n; step++) {\n    ways[step] = ways[step - 1] + ways[step - 2];\n  }\n\n  return ways[n];\n}\n\nconsole.log(climbingStairs(5));",
+        output: "8"
+      },
+      {
+        title: "Minimum Coin Change: Optimization",
+        description: "dp[amount] is the fewest coins needed to form that amount.",
+        language: "ts",
+        code: "function minimumCoins(coins: number[], target: number): number {\n  const dp = Array<number>(target + 1).fill(Infinity);\n  dp[0] = 0;\n\n  for (let amount = 1; amount <= target; amount++) {\n    for (const coin of coins) {\n      if (coin <= amount) {\n        dp[amount] = Math.min(dp[amount], dp[amount - coin] + 1);\n      }\n    }\n  }\n\n  return dp[target] === Infinity ? -1 : dp[target];\n}\n\nconsole.log(minimumCoins([1, 3, 4], 6));",
+        output: "2"
+      }
+    ],
+    visualTransform: {
+      inputLabel: "Repeated Calls",
+      inputItems: ["fib(3)", "fib(2)", "fib(3)"],
+      operationLabel: "cache by state",
+      outputLabel: "Unique Results",
+      outputItems: ["memo[2]", "memo[3]"]
+    },
+    relatedConceptSlugs: [],
+    flashcards: [
+      {
+        front: "What two properties suggest dynamic programming?",
+        back: "Overlapping subproblems and optimal substructure.",
+        explanation: "Repeated states make reuse valuable, while optimal substructure lets smaller answers compose into the larger answer.",
+        difficulty: "INTERMEDIATE"
+      },
+      {
+        front: "What should you define before writing a DP table?",
+        back: "The meaning of one state and the recurrence that connects it to smaller states.",
+        difficulty: "INTERMEDIATE"
+      },
+      {
+        front: "How do memoization and tabulation differ?",
+        back: "Memoization evaluates states top-down through cached recursion; tabulation evaluates them bottom-up in dependency order.",
+        difficulty: "INTERMEDIATE"
+      },
+      {
+        front: "What is the state in the minimum coin change example?",
+        back: "dp[amount] is the minimum number of coins needed to form that amount.",
+        difficulty: "INTERMEDIATE"
+      }
+    ],
+    quizQuestions: [
+      {
+        prompt: "Which observation most strongly suggests memoization could improve a recursive solution?",
+        type: "MULTIPLE_CHOICE",
+        explanation: "Memoization removes work when the recursion reaches the same state repeatedly.",
+        difficulty: "INTERMEDIATE",
+        answers: [
+          { body: "The same arguments appear in many recursive calls.", isCorrect: true },
+          { body: "Every call has unique arguments.", isCorrect: false },
+          { body: "The input is already sorted.", isCorrect: false },
+          { body: "The function has no return value.", isCorrect: false }
+        ]
+      },
+      {
+        prompt: "What does a DP transition describe?",
+        type: "MULTIPLE_CHOICE",
+        explanation: "A transition expresses one state in terms of smaller, already defined states.",
+        difficulty: "INTERMEDIATE",
+        answers: [
+          { body: "How the current state is computed from smaller states.", isCorrect: true },
+          { body: "How TypeScript compiles the function.", isCorrect: false },
+          { body: "How to name the output variable.", isCorrect: false },
+          { body: "How to sort the original input.", isCorrect: false }
+        ]
+      },
+      {
+        prompt: "Why must bottom-up states be evaluated in dependency order?",
+        type: "MULTIPLE_CHOICE",
+        explanation: "Each transition must read answers that have already been computed.",
+        difficulty: "INTERMEDIATE",
+        answers: [
+          { body: "The states used by a transition must already have answers.", isCorrect: true },
+          { body: "Arrays can only be read from left to right.", isCorrect: false },
+          { body: "Recursion requires a sorted table.", isCorrect: false },
+          { body: "It guarantees constant space usage.", isCorrect: false }
+        ]
+      },
+      {
+        prompt: "The coin-change implementation examines every coin for every amount. What is its time complexity?",
+        type: "MULTIPLE_CHOICE",
+        explanation: "There are target states, and each state loops over all coin choices.",
+        difficulty: "INTERMEDIATE",
+        answers: [
+          { body: "O(target × coins.length)", isCorrect: true },
+          { body: "O(target)", isCorrect: false },
+          { body: "O(2^target)", isCorrect: false },
+          { body: "O(log target)", isCorrect: false }
+        ]
+      }
+    ]
+  },
+  {
     slug: "factory-pattern",
     title: "Factory Pattern",
     subtitle: "Centralize object creation behind a stable interface",
